@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -165,6 +167,9 @@ namespace TeamsHubDesktopClient.Pages
                 };
                 grdContainer.Children.Add(lblTaskEndDate);
 
+                grdContainer.PreviewMouseLeftButtonDown += (sender, e) => ShowDetailsTask(task);
+
+
                 if (task.Status == "Actividad Pendiente")
                 {
                     stackPanelPendientes.Children.Add(grdContainer);
@@ -184,12 +189,38 @@ namespace TeamsHubDesktopClient.Pages
             wpActivitiesFinalizadas.Children.Add(scrollViewerFinalizadas);
         }
 
+        private void ShowDetailsTask(TaskDTO task)
+        {
+            grdForm.Visibility = Visibility.Visible;
+            txtName.Text = task.Name;
+            txtDescription.Text = task.Description;
+            txtDatePickerStartDate.Text = task.StartDate.ToString("dd/MM/yy");
+            txtDatePickerEndDate.Text = task.EndDate.ToString("dd/MM/yy");
+            dpStartDate.SelectedDate = task.StartDate;
+            dpEndDate.SelectedDate = task.EndDate;
+            txtID.Text = task.IdTask.ToString();
+            switch (task.Status)
+            {
+                case "Actividad Pendiente":
+                    cboStatus.SelectedIndex = 0;
+                    break;
+                case "Actividad en proceso":
+                    cboStatus.SelectedIndex = 1;
+                    break;
+                case "Actividad Finalizada":
+                    cboStatus.SelectedIndex = 2;
+                    break;
+            }
+            btnDeleteTask.Visibility = Visibility.Visible;
+            btnUpdateTask.Visibility = Visibility.Visible;
+        }
+
         private void BackToPreviousWindow(object sender, MouseButtonEventArgs e)
         {
             NavigationService.Navigate(new Index());
         }
 
-        private void Button_RegisterTask(object sender, RoutedEventArgs e)
+        private async void Button_RegisterTask(object sender, RoutedEventArgs e)
         {
             if (AreValidFields())
             {
@@ -215,11 +246,52 @@ namespace TeamsHubDesktopClient.Pages
                         break;
                 }
 
-                Task<bool> result = _TaskManagement.AddTask(taskDTO);
+                bool result = await _TaskManagement.AddTaskAsync(taskDTO);
                 MessageBox.Show("La tarea se ha agregado correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
                 NavigationService.Navigate(new ActivitiesModule(_projectID));
             }
         }
+
+        private async void Button_UpdateTask(object sender, RoutedEventArgs e)
+        {
+            if (AreValidFields())
+            {
+                TaskDTO taskDTO = new TaskDTO
+                {
+                    IdTask = int.Parse(txtID.Text),
+                    Name = txtName.Text,
+                    Description = txtDescription.Text,
+                    StartDate = (DateTime)dpStartDate.SelectedDate,
+                    EndDate = (DateTime)dpEndDate.SelectedDate,
+                    IdProject = ProjectSinglenton.projectDTO.IdProject
+                };
+
+                switch (cboStatus.SelectedIndex)
+                {
+                    case 0:
+                        taskDTO.Status = "Actividad Pendiente";
+                        break;
+                    case 1:
+                        taskDTO.Status = "Actividad en proceso";
+                        break;
+                    case 2:
+                        taskDTO.Status = "Actividad Finalizada";
+                        break;
+                }
+
+                bool result = await _TaskManagement.UpdateTaskAsync(taskDTO);
+                MessageBox.Show("La tarea se ha agregado correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                NavigationService.Navigate(new ActivitiesModule(_projectID));
+            }
+        }
+
+        private async void Button_DeleteTask(object sender, RoutedEventArgs e)
+        {
+            bool result = await _TaskManagement.RemoveTaskAsync(int.Parse(txtID.Text));
+            MessageBox.Show("La tarea se ha agregado correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+            NavigationService.Navigate(new ActivitiesModule(_projectID));
+        }
+
 
         private bool AreValidFields()
         {
@@ -262,6 +334,5 @@ namespace TeamsHubDesktopClient.Pages
         {
             grdForm.Visibility = Visibility.Hidden;
         }
-       
     }
 }

@@ -14,7 +14,7 @@
     </Page.Background>
 
     <Grid>
-        <Image HorizontalAlignment="Left" Height="128" Margin="679,76,0,0" VerticalAlignment="Top" Width="397" Source="..\Resources\Pictures\Team_Hub-removebg-preview.png"/>
+        <Image HorizontalAlignment="Left" Height="128" Margin="679,76,0,0" VerticalAlignment="Top" Width="397" Source="D:\Workspace-C#\TeamsHubDesktopClient\Resources\Pictures\Team_Hub-removebg-preview.png"/>
 
         <Grid x:Name="grdLogin" Visibility="Visible">
             <Rectangle HorizontalAlignment="Center" Height="438" Stroke="Black" VerticalAlignment="Top" Width="515" Fill="#FF212121" RadiusX="30" RadiusY="30" Opacity="0.6" Margin="0,231,0,0">
@@ -37,7 +37,7 @@
                     </TransformGroup>
                 </Rectangle.RenderTransform>
             </Rectangle>
-            <Image HorizontalAlignment="Left" Height="26" Margin="693,404,0,0" VerticalAlignment="Top" Width="29" Source="..\Resources\Pictures\ICON-EMAIL.png"/>
+            <Image HorizontalAlignment="Left" Height="26" Margin="693,404,0,0" VerticalAlignment="Top" Width="29" Source="D:\Workspace-C#\TeamsHubDesktopClient\Resources\Pictures\ICON-EMAIL.png"/>
             <TextBox x:Name="txtEmail" HorizontalAlignment="Left" Margin="733,399,0,0" TextWrapping="Wrap" Text="" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="322" Height="36" Background="{x:Null}" Foreground="#FFFFF3F3" BorderBrush="{x:Null}" FontFamily="Arial" FontSize="18"/>
             <Rectangle HorizontalAlignment="Center" Height="52" Stroke="#FF0C97C8" StrokeThickness="1" VerticalAlignment="Top" Width="384" RadiusY="15" RadiusX="15" RenderTransformOrigin="0.5,0.5" Margin="0,457,0,0">
                 <Rectangle.RenderTransform>
@@ -49,15 +49,17 @@
                     </TransformGroup>
                 </Rectangle.RenderTransform>
             </Rectangle>
-            <Image HorizontalAlignment="Left" Height="26" Margin="693,470,0,0" VerticalAlignment="Top" Width="29" Source="..\Resources\Pictures\ICON-PASSWORD.png"/>
-            <TextBox x:Name="txtPassword" HorizontalAlignment="Left" Margin="728,465,0,0" TextWrapping="Wrap" Text="" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="267" Height="36" Background="{x:Null}" Foreground="#FFFFF3F3" BorderBrush="{x:Null}" FontFamily="Arial" FontSize="18"/>
-            <Label Content="Mostrar" HorizontalAlignment="Left" Margin="1000,470,0,0" VerticalAlignment="Top" Foreground="White" FontWeight="Bold"/>
+            <Image HorizontalAlignment="Left" Height="26" Margin="693,470,0,0" VerticalAlignment="Top" Width="29" Source="D:\Workspace-C#\TeamsHubDesktopClient\Resources\Pictures\ICON-PASSWORD.png"/>
+            <TextBox x:Name="txtPassword" Visibility="Hidden" HorizontalAlignment="Left" Margin="728,465,0,0" TextWrapping="Wrap" Text="" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="267" Height="36" Background="{x:Null}" Foreground="#FFFFF3F3" BorderBrush="{x:Null}" FontFamily="Arial" FontSize="18" TextChanged="TxtPassword_TextChanged"/>
+            <PasswordBox x:Name="pwdPassword" HorizontalAlignment="Left" Margin="728,465,0,0" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="267" Height="36" Background="{x:Null}" Foreground="#FFFFF3F3" BorderBrush="{x:Null}" FontFamily="Arial" FontSize="18" PasswordChanged="PasswordBox_PasswordChanged"/>
             <Border CornerRadius="10" Background="#FF5BA1C5" HorizontalAlignment="Center" Margin="0,570,0,0" VerticalAlignment="Top" Height="43" Width="384">
                 <Button Content="Sign in" Background="Transparent" BorderBrush="Transparent" Click="Button_Login" Foreground="White" FontWeight="Bold" FontSize="18"/>
             </Border>
             <Label Content="¿Aun no cuentas con una cuenta?" HorizontalAlignment="Left" Margin="683,713,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="18" Foreground="#FFB2ACAC"/>
             <Label Content="¿Olvidaste tu contraseña?" HorizontalAlignment="Left" Margin="766,752,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="18" Foreground="#FF2A50DD"/>
             <Label Content="Registrare aquí" HorizontalAlignment="Left" Margin="944,713,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="18" Foreground="#FF2A50DD" MouseLeftButtonUp ="Label_ShowForm"/>
+            <Label x:Name="lblHidePassword" Visibility="Hidden" Content="Ocultar" HorizontalAlignment="Left" Margin="1000,470,0,0" VerticalAlignment="Top" Foreground="White" FontWeight="Bold" MouseLeftButtonDown = "HidePassword_MouseLeftButtonDown"/>
+            <Label x:Name="lblViewPassword"  Content="Mostrar" HorizontalAlignment="Left" Margin="1000,470,0,0" VerticalAlignment="Top" Foreground="White" FontWeight="Bold" MouseLeftButtonDown ="ViewPassword_MouseLeftButtonDown"/>
         </Grid>
 
         <Grid x:Name="grdRegisterForm" Visibility="Hidden">
