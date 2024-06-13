@@ -1,0 +1,38 @@
+﻿<Page x:Class="TeamsHubDesktopClient.Pages.AddStudentsToProject"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TeamsHubDesktopClient.Pages"
+      mc:Ignorable="d" 
+      Height="922.16" 
+      Width="1742.8"
+      Title="AddStudentsToProject">
+
+    <Page.Background>
+        <ImageBrush ImageSource="D:\Workspace-C#\TeamsHubDesktopClient\Resources\Pictures\Background2.jpeg"/>
+    </Page.Background>
+
+    <Grid>
+        <local:NavigationBar Grid.Column="0" HorizontalAlignment="Left" Margin="0,0,0,0"/>
+
+        <Rectangle HorizontalAlignment="Left" Height="875" Margin="138,30,0,0" Stroke="Black" VerticalAlignment="Top" Fill="#FF212121" Width="1568" RadiusX="30" RadiusY="30"/>
+        <Rectangle HorizontalAlignment="Left" Height="77" Margin="186,56,0,0" Stroke="Black" VerticalAlignment="Top" Width="1475" RadiusX="30" RadiusY="30" Fill="#FF332F2F" StrokeThickness="0"/>
+        <Label x:Name="lblProjectName" Content="Nombre del proyecto" HorizontalAlignment="Left" Margin="288,73,0,0" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="30" Foreground="White"/>
+        <Image HorizontalAlignment="Left" Height="79" Margin="186,56,0,0" VerticalAlignment="Top" Width="77" Source="D:\Workspace-C#\TeamsHubDesktopClient\Resources\Pictures\ICON-BACK.png"/>
+
+
+
+        <Rectangle HorizontalAlignment="Left" Height="48" Margin="998,212,0,0" VerticalAlignment="Top" Width="523" RadiusY="10" RadiusX="10" Fill="#FFA3A3A3"/>
+        <Label Content="Integrantes del equipo" HorizontalAlignment="Left" Margin="1127,162,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="25" FontWeight="Bold" Foreground="#FFF5EEEE"/>
+        <Label x:Name="lblStartDate" Content="Fecha de inicio: " HorizontalAlignment="Left" Margin="215,171,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="25" FontWeight="Bold" Foreground="#FFF5EEEE"/>
+        <Label x:Name="lblEndDate" Content="Fecha de finalizacion: " HorizontalAlignment="Left" Margin="215,221,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="25" FontWeight="Bold" Foreground="#FFF5EEEE"/>
+        <Label Content="Actividades" HorizontalAlignment="Left" Margin="405,309,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="25" FontWeight="Bold" Foreground="#FFF5EEEE"/>
+        <Button Content="Agregar" HorizontalAlignment="Left" Margin="1533,210,0,0" VerticalAlignment="Top" Height="49" Width="141" BorderBrush="#FF0C0101" Foreground="White" Background="Black" FontSize="17" FontFamily="Arial Black" Click="Button_Click"/>
+        <TextBox x:Name="txtSearch" HorizontalAlignment="Left" Margin="1005,215,0,0" TextWrapping="Wrap" Text="" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="509" Height="41" Background="#FFA3A3A3" Foreground="#FF190D0D" FontSize="20"/>
+        <WrapPanel x:Name="wpTeam" Margin="981,284,69,30"/>
+        <WrapPanel x:Name="wpTask" Margin="164,358,872,30"/>
+
+
+    </Grid>
+</Page>

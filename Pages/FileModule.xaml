@@ -1,0 +1,24 @@
+﻿<Page x:Class="TeamsHubDesktopClient.Pages.FileModule"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TeamsHubDesktopClient.Pages"
+      mc:Ignorable="d" 
+      Height="922.16" 
+      Width="1742.8"
+      Title="FileModule">
+
+    <Page.Background>
+        <ImageBrush ImageSource="D:\Workspace-C#\TeamsHubDesktopClient\Resources\Pictures\Background2.jpeg"/>
+    </Page.Background>
+
+    <Grid>
+        <Rectangle HorizontalAlignment="Left" Height="875" Margin="138,30,0,0" Stroke="Black" VerticalAlignment="Top" Fill="#FF212121" Width="1568" RadiusX="30" RadiusY="30"/>
+        <Rectangle HorizontalAlignment="Left" Height="77" Margin="186,56,0,0" Stroke="Black" VerticalAlignment="Top" Width="1475" RadiusX="30" RadiusY="30" Fill="#FF332F2F" StrokeThickness="0"/>
+        <Label x:Name="lblProjectName" Content="Nombre del proyecto" HorizontalAlignment="Left" Margin="288,73,0,0" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="30" Foreground="White"/>
+        <Button Content="Subir Documento" HorizontalAlignment="Left" Margin="1394,66,0,0" VerticalAlignment="Top" Height="58" Width="254" BorderBrush="#FF0C0101" Foreground="White" Background="Black" FontSize="20" FontFamily="Arial Black"/>
+        <Image HorizontalAlignment="Left" Height="79" Margin="186,56,0,0" VerticalAlignment="Top" Width="77" Source="D:\Workspace-C#\TeamsHubDesktopClient\Resources\Pictures\ICON-BACK.png" MouseLeftButtonUp="BackToPreviousWindow"/>
+        <local:NavigationBar Grid.Column="0" HorizontalAlignment="Left" Margin="0,0,0,0"/>
+    </Grid>
+</Page>

@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup />
+  <ItemGroup>
+    <Compile Update="Pages\ActivitiesModule.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\AddStudentsToProject.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\DetailsProfileModule.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\FileModule.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\Index.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\Login.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\NavigationBar.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\ProjectProgressModule.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\ActivitiesModule.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\AddStudentsToProject.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\DetailsProfileModule.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\FileModule.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Index.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Login.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\NavigationBar.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\ProjectProgressModule.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>

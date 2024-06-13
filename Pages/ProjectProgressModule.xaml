@@ -1,0 +1,41 @@
+﻿<Page x:Class="TeamsHubDesktopClient.Pages.ProjectProgressModule"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TeamsHubDesktopClient.Pages" xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+      mc:Ignorable="d" 
+      Height="922.16" 
+      Width="1742.8"
+      Title="ProjectProgressModule">
+
+    <Page.Background>
+        <ImageBrush ImageSource="D:\Workspace-C#\TeamsHubDesktopClient\Resources\Pictures\Background2.jpeg"/>
+    </Page.Background>
+
+    <Grid>
+        <Rectangle HorizontalAlignment="Left" Height="875" Margin="138,20,0,0" Stroke="Black" VerticalAlignment="Top" Fill="#FF212121" Width="1568" RadiusX="30" RadiusY="30"/>
+        <Rectangle HorizontalAlignment="Left" Height="77" Margin="186,46,0,0" Stroke="Black" VerticalAlignment="Top" Width="1475" RadiusX="30" RadiusY="30" Fill="#FF332F2F" StrokeThickness="0"/>
+        <Label x:Name="lblProyectName" Content="Nombre del proyecto" HorizontalAlignment="Left" Margin="288,63,0,0" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="30" Foreground="White"/>
+        <Image HorizontalAlignment="Left" Height="79" Margin="186,46,0,0" VerticalAlignment="Top" Width="77" Source="D:\Workspace-C#\TeamsHubDesktopClient\Resources\Pictures\ICON-BACK.png"/>
+        <local:NavigationBar Grid.Column="0" HorizontalAlignment="Left" Margin="0,0,0,0"/>
+
+        <wpf:PieChart Margin="288,257,787,131" DataTooltip="{x:Null}" Hoverable="False" DataClick="PieChart_DataClick">
+            <wpf:PieChart.Series>
+                <wpf:PieSeries Title="Actividades Pendientes" Values="{Binding Values1}" DataLabels="true" LabelPoint="{Binding PointLabel}"/>
+                <wpf:PieSeries Title="Actividades en proceso" Values="{Binding Values2}" DataLabels="true" LabelPoint="{Binding PointLabel}"/>
+                <wpf:PieSeries Title="Actividades Terminadas" Values="{Binding Values3}" DataLabels="true" LabelPoint="{Binding PointLabel}"/>
+            </wpf:PieChart.Series>
+        </wpf:PieChart>
+        <Label Content="Representacion del avance proyecto" HorizontalAlignment="Left" Margin="313,174,0,0" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="30" Foreground="White"/>
+        <Rectangle HorizontalAlignment="Left" Height="49" Margin="1075,423,0,0" Stroke="#FF325BD8" VerticalAlignment="Top" Width="49" Fill="#FF325BD8"/>
+        <Rectangle HorizontalAlignment="Left" Height="49" Margin="1075,525,0,0" Stroke="#FFFEC007" VerticalAlignment="Top" Width="49" Fill="#FFFEC007"/>
+        <Rectangle HorizontalAlignment="Left" Height="49" Margin="1075,627,0,0" Stroke="#FFF34336" VerticalAlignment="Top" Width="49" Fill="#FFF34336"/>
+        <Label Content="Actividades Pendientes" HorizontalAlignment="Left" Margin="1137,426,0,0" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="30" Foreground="White"/>
+        <Label Content="Actividades En Proceso" HorizontalAlignment="Left" Margin="1137,527,0,0" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="30" Foreground="White"/>
+        <Label Content="Actividades Terminadas" HorizontalAlignment="Left" Margin="1137,627,0,0" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="30" Foreground="White"/>
+        <Label Content="Total de actividades: " HorizontalAlignment="Left" Margin="1075,338,0,0" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="30" Foreground="White"/>
+        <Label x:Name="lblTaskNum" Content=" " HorizontalAlignment="Left" Margin="1442,338,0,0" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="30" Foreground="White" Width="33" Height="45"/>
+    </Grid>
+
+</Page>
