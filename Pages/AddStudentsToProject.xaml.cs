@@ -93,7 +93,7 @@ namespace TeamsHubDesktopClient.Pages
                 {
                     Height = 50,
                     Width = 50,
-                    Source = new BitmapImage(new Uri("D:\\Workspace-C#\\TeamsHubDesktopClient\\Resources\\Pictures\\ICON-TASK.png", UriKind.RelativeOrAbsolute)),
+                    Source = new BitmapImage(new Uri("..\\Resources\\Pictures\\ICON-TASK.png", UriKind.RelativeOrAbsolute)),
                     Stretch = Stretch.Fill,
                     Margin = new Thickness(-565, 0, 0, 0),
                 };
@@ -169,7 +169,7 @@ namespace TeamsHubDesktopClient.Pages
                 {
                     Height = 50,
                     Width = 50,
-                    Source = new BitmapImage(new Uri("D:\\Workspace-C#\\TeamsHubDesktopClient\\Resources\\Pictures\\ICON-PROFILE.png", UriKind.RelativeOrAbsolute)),
+                    Source = new BitmapImage(new Uri("..\\Resources\\Pictures\\ICON-PROFILE.png", UriKind.RelativeOrAbsolute)),
                     Stretch = Stretch.Fill,
                     Margin = new Thickness(-565, 0, 0, 0),
                 };

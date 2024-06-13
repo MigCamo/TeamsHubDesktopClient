@@ -10,7 +10,7 @@
       Title="Index">
 
     <Page.Background>
-        <ImageBrush ImageSource="D:\Workspace-C#\TeamsHubDesktopClient\Resources\Pictures\background.jpg"/>
+        <ImageBrush ImageSource="..\Resources\Pictures\background.jpg"/>
     </Page.Background>
 
     <Grid x:Name="Background">
@@ -23,7 +23,7 @@
                 <Button x:Name="butLogOut" Content="Cerrar Sesión" HorizontalAlignment="Left" Margin="1221,38,0,0" VerticalAlignment="Top" Height="64" Width="484" Background="#FF185D76" Foreground="White" FontFamily="Arial Black" FontSize="22" Click="LogOut"/>
                 <Label Content="Mi espacio de trabajo" HorizontalAlignment="Left" Margin="58,27,0,0" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="48" FontWeight="ExtraBold" Foreground="#FFFCF3F3"/>
                 <Rectangle HorizontalAlignment="Left" Height="63" Margin="1221,38,0,0" VerticalAlignment="Top" Width="484"  RadiusY="30" RadiusX="30" StrokeThickness="0" Fill="#FF204C26"/>
-                <Image HorizontalAlignment="Left" Height="61" Margin="1232,38,0,0" VerticalAlignment="Top" Width="60" Source="D:\Workspace-C#\TeamsHubDesktopClient\Resources\Pictures\ICON-PROFILE.png"/>
+                <Image HorizontalAlignment="Left" Height="61" Margin="1232,38,0,0" VerticalAlignment="Top" Width="60" Source="..\Resources\Pictures\ICON-PROFILE.png"/>
                 <Label x:Name="lblStudentName" Content="MigCamo" HorizontalAlignment="Left" Margin="1292,47,0,0" VerticalAlignment="Top" Height="47" Width="392" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="20" FontWeight="Bold" FontFamily="Arial Black" Foreground="White"/>
             </Grid>
         </Border>

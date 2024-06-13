@@ -39,7 +39,7 @@ namespace TeamsHubDesktopClient.Pages
             InitializeComponent();
             lblStudentName.Content = StudentSinglenton.FullName;
             projectManagementRESTProvider = new ProjectManagementRESTProvider();
-            InitializeProjectsAsync();
+            _ = InitializeProjectsAsync();
             InitializeAnimation();
         }
 
@@ -101,7 +101,7 @@ namespace TeamsHubDesktopClient.Pages
                 {
                     Height = 160,
                     Width = 160,
-                    Source = new BitmapImage(new Uri("D:\\Workspace-C#\\TeamsHubDesktopClient\\Resources\\Pictures\\ICON-PROJECT.png", UriKind.RelativeOrAbsolute)),
+                    Source = new BitmapImage(new Uri("..\\Resources\\Pictures\\ICON-PROJECT.png", UriKind.RelativeOrAbsolute)),
                     Stretch = Stretch.Fill,
                     Margin = new Thickness(-1240, 0, 0, 0),
                 };
@@ -172,7 +172,7 @@ namespace TeamsHubDesktopClient.Pages
                     Height = 45,
                     Width = 45,
                     Margin = new Thickness(960, 115, 0, 0),
-                    Source = new BitmapImage(new Uri("D:\\Workspace-C#\\TeamsHubDesktopClient\\Resources\\Pictures\\ICON-DELETEPROJECT.png", UriKind.RelativeOrAbsolute)),
+                    Source = new BitmapImage(new Uri("..\\Resources\\Pictures\\ICON-DELETEPROJECT.png", UriKind.RelativeOrAbsolute)),
                 };
                 btnDeleteProject.MouseLeftButtonUp += (sender, e) => DeleteProjectAsync(project);
                 grdContainer.Children.Add(btnDeleteProject);
@@ -184,7 +184,7 @@ namespace TeamsHubDesktopClient.Pages
                     Height = 50,
                     Width = 50,
                     Margin = new Thickness(1025, 115, 0, 0),
-                    Source = new BitmapImage(new Uri("D:\\Workspace-C#\\TeamsHubDesktopClient\\Resources\\Pictures\\ICON-UPDATEPROJECT.png", UriKind.RelativeOrAbsolute)),
+                    Source = new BitmapImage(new Uri("..\\Resources\\Pictures\\ICON-UPDATEPROJECT.png", UriKind.RelativeOrAbsolute)),
                 };
                 btnUpdateProject.MouseLeftButtonUp += (sender, e) => UpdateProject(project);
                 grdContainer.Children.Add(btnUpdateProject);

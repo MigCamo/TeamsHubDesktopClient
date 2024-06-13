@@ -10,7 +10,7 @@
         <Rectangle HorizontalAlignment="Left" Height="664" Margin="0,0,0,0" Stroke="Black" VerticalAlignment="Top" Fill="#FF212121" Width="1568" RadiusX="30" RadiusY="30"/>
         <Rectangle HorizontalAlignment="Left" Height="77" Margin="45,47,0,0" Stroke="Black" VerticalAlignment="Top" Width="1475" RadiusX="30" RadiusY="30" Fill="#FF332F2F" StrokeThickness="0"/>
         <Label x:Name="lblProjectName" Content="Detalles perfil" HorizontalAlignment="Left" Margin="93,64,0,0" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="30" Foreground="White"/>
-        <Image HorizontalAlignment="Left" Height="278" Margin="135,184,0,0" VerticalAlignment="Top" Width="264" Source="D:\Workspace-C#\TeamsHubDesktopClient\Resources\Pictures\ICON-PROFILEUSER.png"/>
+        <Image HorizontalAlignment="Left" Height="278" Margin="135,184,0,0" VerticalAlignment="Top" Width="264" Source="..\Resources\Pictures\ICON-PROFILEUSER.png"/>
         <Label Content="Nombre(s)*" HorizontalAlignment="Left" Margin="454,184,0,0" VerticalAlignment="Top" Foreground="White" FontSize="18" FontWeight="Bold"/>
         <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="579,184,0,0" TextWrapping="Wrap" Text="" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="336" Height="36" Background="{x:Null}" Foreground="#FFFFF3F3" BorderBrush="#FFADA5A5" FontFamily="Arial" FontSize="18"/>
         <Label Content="Apellido Paterno*" HorizontalAlignment="Left" Margin="944,178,0,0" VerticalAlignment="Top" Foreground="White" FontSize="18" FontWeight="Bold"/>

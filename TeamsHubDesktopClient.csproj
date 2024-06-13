@@ -9,10 +9,64 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Pictures\abstract-blurred-colorful-flickering-light-leak-gradient-background-video.jpg" />
+    <None Remove="Resources\Pictures\background.jpg" />
+    <None Remove="Resources\Pictures\Background2.jpeg" />
+    <None Remove="Resources\Pictures\grafico.png" />
+    <None Remove="Resources\Pictures\ICON-ARCHIVO.png" />
+    <None Remove="Resources\Pictures\ICON-BACK.png" />
+    <None Remove="Resources\Pictures\ICON-DELETEPROJECT.png" />
+    <None Remove="Resources\Pictures\ICON-EMAIL.png" />
+    <None Remove="Resources\Pictures\ICON-LOGOUT.png" />
+    <None Remove="Resources\Pictures\ICON-PASSWORD.png" />
+    <None Remove="Resources\Pictures\ICON-PEOJWCT.png" />
+    <None Remove="Resources\Pictures\ICON-PROFILE.png" />
+    <None Remove="Resources\Pictures\ICON-PROFILEUSER.png" />
+    <None Remove="Resources\Pictures\ICON-PROJECT.png" />
+    <None Remove="Resources\Pictures\ICON-TAREA.png" />
+    <None Remove="Resources\Pictures\ICON-TASK.png" />
+    <None Remove="Resources\Pictures\ICON-UPDATEPROJECT.png" />
+    <None Remove="Resources\Pictures\proyecto %281%29.png" />
+    <None Remove="Resources\Pictures\Team_Hub-removebg-preview.png" />
+  </ItemGroup>
+	
+	<ItemGroup>
+		<Protobuf Include="Protos\file.proto" GrpcServices="Client" />
+	</ItemGroup>	
+  
+	<ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.27.1" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.63.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.64.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
-  </ItemGroup>
+  </ItemGroup>	
+  
+	<ItemGroup>
+	  <Resource Include="Resources\Pictures\abstract-blurred-colorful-flickering-light-leak-gradient-background-video.jpg" />
+	  <Resource Include="Resources\Pictures\background.jpg" />
+	  <Resource Include="Resources\Pictures\Background2.jpeg" />
+	  <Resource Include="Resources\Pictures\grafico.png" />
+	  <Resource Include="Resources\Pictures\ICON-ARCHIVO.png" />
+	  <Resource Include="Resources\Pictures\ICON-BACK.png" />
+	  <Resource Include="Resources\Pictures\ICON-DELETEPROJECT.png" />
+	  <Resource Include="Resources\Pictures\ICON-EMAIL.png" />
+	  <Resource Include="Resources\Pictures\ICON-LOGOUT.png" />
+	  <Resource Include="Resources\Pictures\ICON-PASSWORD.png" />
+	  <Resource Include="Resources\Pictures\ICON-PEOJWCT.png" />
+	  <Resource Include="Resources\Pictures\ICON-PROFILE.png" />
+	  <Resource Include="Resources\Pictures\ICON-PROFILEUSER.png" />
+	  <Resource Include="Resources\Pictures\ICON-PROJECT.png" />
+	  <Resource Include="Resources\Pictures\ICON-TAREA.png" />
+	  <Resource Include="Resources\Pictures\ICON-TASK.png" />
+	  <Resource Include="Resources\Pictures\ICON-UPDATEPROJECT.png" />
+	  <Resource Include="Resources\Pictures\proyecto (1).png" />
+	  <Resource Include="Resources\Pictures\Team_Hub-removebg-preview.png" />
+	</ItemGroup>
 
 </Project>

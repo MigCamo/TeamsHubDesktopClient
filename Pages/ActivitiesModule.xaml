@@ -10,14 +10,14 @@
       Title="ActivitiesModule">
 
     <Page.Background>
-        <ImageBrush ImageSource="D:\Workspace-C#\TeamsHubDesktopClient\Resources\Pictures\Background2.jpeg"/>
+        <ImageBrush ImageSource="..\Resources\Pictures\Background2.jpeg"/>
     </Page.Background>
 
     <Grid>
         <Rectangle HorizontalAlignment="Left" Height="77" Margin="138,42,0,0" Stroke="Black" VerticalAlignment="Top" Width="1552" RadiusX="30" RadiusY="30" Fill="#FF24262B" StrokeThickness="0"/>
         <Label x:Name="lblProjectName" Content="Nombre del proyecto" HorizontalAlignment="Left" Margin="265,59,0,0" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="30" Foreground="#FFFAFAFA"/>
         <Button Content="Nueva actividad" HorizontalAlignment="Left" Margin="1405,52,0,0" VerticalAlignment="Top" Height="58" Width="254" BorderBrush="#FF0C0101" Foreground="White" Background="Black" FontSize="20" FontFamily="Arial Black" Click="Button_ShowForm"/>
-        <Image HorizontalAlignment="Left" Height="79" Margin="163,42,0,0" VerticalAlignment="Top" Width="77" Source="D:\Workspace-C#\TeamsHubDesktopClient\Resources\Pictures\ICON-BACK.png" MouseLeftButtonUp="BackToPreviousWindow"/>
+        <Image HorizontalAlignment="Left" Height="79" Margin="163,42,0,0" VerticalAlignment="Top" Width="77" Source="..\Resources\Pictures\ICON-BACK.png" MouseLeftButtonUp="BackToPreviousWindow"/>
         <Rectangle HorizontalAlignment="Left" Height="736" Margin="156,133,0,0" Stroke="Black" VerticalAlignment="Top" Width="480" RadiusX="30" RadiusY="30" Fill="#FF22272B" StrokeThickness="0"/>
         <Rectangle HorizontalAlignment="Left" Height="736" Margin="674,133,0,0" Stroke="Black" VerticalAlignment="Top" Width="480" RadiusX="30" RadiusY="30" Fill="#FF22272B" StrokeThickness="0"/>
         <Rectangle HorizontalAlignment="Left" Height="736" Margin="1194,133,0,0" Stroke="Black" VerticalAlignment="Top" Width="480" RadiusX="30" RadiusY="30" Fill="#FF22272B" StrokeThickness="0"/>
@@ -66,7 +66,7 @@
             <Label Content="Detalles Tarea" HorizontalAlignment="Left" Margin="603,189,0,0" VerticalAlignment="Top" Foreground="#FFF1F1F1" FontFamily="Arial Black" FontSize="30"/>
             <Label Content="Nombre: " HorizontalAlignment="Left" Margin="670,271,0,0" VerticalAlignment="Top" Foreground="#FFFFF5F5" FontFamily="Arial Black" FontSize="24"/>
             <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="804,271,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="373" FontSize="25" FontFamily="Arial" Height="38"/>
-            <Image HorizontalAlignment="Left" Height="41" Margin="548,191,0,0" VerticalAlignment="Top" Width="50" Source="D:\Workspace-C#\TeamsHubDesktopClient\Resources\Pictures\ICON-BACK.png" MouseLeftButtonUp="CloseForm" RenderTransformOrigin="0.521,0.516"/>
+            <Image HorizontalAlignment="Left" Height="41" Margin="548,191,0,0" VerticalAlignment="Top" Width="50" Source="..\Resources\Pictures\ICON-BACK.png" MouseLeftButtonUp="CloseForm" RenderTransformOrigin="0.521,0.516"/>
             <Label Content="Descripcion: " HorizontalAlignment="Left" Margin="617,338,0,0" VerticalAlignment="Top" Foreground="#FFFFF5F5" FontFamily="Arial Black" FontSize="24"/>
             <TextBox x:Name="txtDescription" HorizontalAlignment="Left" Margin="804,338,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="373" FontSize="25" FontFamily="Arial" Height="123"/>
             <Label Content="Fecha de inicio: " HorizontalAlignment="Left" Margin="574,501,0,0" VerticalAlignment="Top" Foreground="#FFFFF5F5" FontFamily="Arial Black" FontSize="24"/>
