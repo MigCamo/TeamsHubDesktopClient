@@ -45,7 +45,7 @@ namespace TeamsHubDesktopClient.Pages
                 var loginRequest = new SessionLoginRequest
                 {
                     Email = txtEmail.Text,
-                    password = txtPassword.Text
+                    password = pwdPassword.Password
                 };
 
                 var response = await userIdentityManager.ValidateUserAsync(loginRequest);
@@ -67,6 +67,37 @@ namespace TeamsHubDesktopClient.Pages
             {
                 MessageBox.Show("Verifique que el correo y " +
                     "contraseña no sea nulo ni tenga espacios en blanco");
+            }
+        }
+
+        private void ViewPassword_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            txtPassword.Text = pwdPassword.Password;
+            pwdPassword.Visibility = Visibility.Collapsed;
+            txtPassword.Visibility = Visibility.Visible;
+            lblHidePassword.Visibility = Visibility.Visible;
+            lblViewPassword.Visibility = Visibility.Collapsed;
+        }
+
+        private void HidePassword_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            pwdPassword.Password = txtPassword.Text;
+            txtPassword.Visibility = Visibility.Collapsed;
+            pwdPassword.Visibility = Visibility.Visible;
+            lblHidePassword.Visibility = Visibility.Collapsed;
+            lblViewPassword.Visibility = Visibility.Visible;
+        }
+
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            txtPassword.Text = pwdPassword.Password;
+        }
+
+        private void TxtPassword_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtPassword.Text))
+            {
+                pwdPassword.Password = txtPassword.Text;
             }
         }
 

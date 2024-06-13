@@ -14,7 +14,7 @@ namespace TeamsHubDesktopClient.Gateways.Provider
     public class TaskManagementRESTProvider
     {
 
-        public async Task<bool> AddTask(TaskDTO newTask)
+        public async Task<bool> AddTaskAsync(TaskDTO newTask)
         {
             try
             {
@@ -54,7 +54,7 @@ namespace TeamsHubDesktopClient.Gateways.Provider
             }
         }
 
-        public async Task<bool> UpdateTask(TaskDTO task)
+        public async Task<bool> UpdateTaskAsync(TaskDTO task)
         {
             try
             {
@@ -127,10 +127,48 @@ namespace TeamsHubDesktopClient.Gateways.Provider
                 return null;
             }
         }
-        
-        public bool RemoveTask(int taskID)
+
+        public async Task<bool> RemoveTaskAsync(int taskID)
         {
-            return true;
+            try
+            {
+                HttpClientSingleton.SetAuthorizationHeader();
+                var requestUri = $"/TeamHub/Task/{taskID}";
+                var response = await HttpClientSingleton.Instance.DeleteAsync(requestUri);
+                response.EnsureSuccessStatusCode();
+
+                var responseContent = await response.Content.ReadAsStringAsync();
+                Console.WriteLine("Response content: " + responseContent); // Inspecciona el contenido de la respuesta
+
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+                var apiResponse = JsonSerializer.Deserialize<ApiResponse>(responseContent, options);
+                return apiResponse?.Success ?? false;
+            }
+            catch (HttpRequestException httpEx)
+            {
+                Console.WriteLine($"HTTP Error: {httpEx.Message}");
+                return false;
+            }
+            catch (JsonException jsonEx)
+            {
+                Console.WriteLine($"JSON Error: {jsonEx.Message}");
+                Console.WriteLine(jsonEx.InnerException); // Información adicional sobre el error
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"General Error: {ex.Message}");
+                return false;
+            }
         }
+    }
+
+    public class ApiResponse
+    {
+        public bool Success { get; set; }
     }
 }

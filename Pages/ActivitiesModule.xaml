@@ -60,13 +60,13 @@
         <WrapPanel x:Name="wpActivitiesFinalizadas" Margin="1204,219,78,63"/>
 
         <Grid x:Name="grdForm" Visibility="Hidden">
-            
+
             <Rectangle HorizontalAlignment="Left" Height="634" Margin="510,0,0,0" VerticalAlignment="Center" Width="792" Fill="#FF141616" RadiusY="30" RadiusX="30"/>
             <Rectangle HorizontalAlignment="Left" Height="65" Margin="534,179,0,0" Stroke="Black" VerticalAlignment="Top" Width="743" RadiusX="30" RadiusY="30" Fill="#FF24262B" StrokeThickness="0"/>
-            <Label Content="Detalles Tarea" HorizontalAlignment="Left" Margin="603,189,0,0" VerticalAlignment="Top" Foreground="#FFF1F1F1" FontFamily="Arial Black" FontSize="30"/>
+            <Label Content="Detalles Tarea" HorizontalAlignment="Left" Margin="627,189,0,0" VerticalAlignment="Top" Foreground="#FFF1F1F1" FontFamily="Arial Black" FontSize="30"/>
             <Label Content="Nombre: " HorizontalAlignment="Left" Margin="670,271,0,0" VerticalAlignment="Top" Foreground="#FFFFF5F5" FontFamily="Arial Black" FontSize="24"/>
             <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="804,271,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="373" FontSize="25" FontFamily="Arial" Height="38"/>
-            <Image HorizontalAlignment="Left" Height="41" Margin="548,191,0,0" VerticalAlignment="Top" Width="50" Source="D:\Workspace-C#\TeamsHubDesktopClient\Resources\Pictures\ICON-BACK.png" MouseLeftButtonUp="CloseForm" RenderTransformOrigin="0.521,0.516"/>
+            <Image HorizontalAlignment="Left" Height="54" Margin="553,184,0,0" VerticalAlignment="Top" Width="55" Source="D:\Workspace-C#\TeamsHubDesktopClient\Resources\Pictures\ICON-BACK.png" MouseLeftButtonUp="CloseForm" RenderTransformOrigin="0.521,0.516"/>
             <Label Content="Descripcion: " HorizontalAlignment="Left" Margin="617,338,0,0" VerticalAlignment="Top" Foreground="#FFFFF5F5" FontFamily="Arial Black" FontSize="24"/>
             <TextBox x:Name="txtDescription" HorizontalAlignment="Left" Margin="804,338,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="373" FontSize="25" FontFamily="Arial" Height="123"/>
             <Label Content="Fecha de inicio: " HorizontalAlignment="Left" Margin="574,501,0,0" VerticalAlignment="Top" Foreground="#FFFFF5F5" FontFamily="Arial Black" FontSize="24"/>
@@ -91,6 +91,9 @@
                 <ComboBoxItem Content="Actividad Finalizada"/>
             </ComboBox>
             <Button Content="Registrar" HorizontalAlignment="Left" Margin="1005,693,0,0" VerticalAlignment="Top" Width="172" Height="42" RenderTransformOrigin="0.5,0.5" Foreground="White" BorderThickness="0" Background="#FF446A7B" FontSize="18" FontWeight="Bold" Click="Button_RegisterTask"/>
+            <TextBox x:Name="txtID" Visibility="Hidden" HorizontalAlignment="Left" Margin="871,189,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="373" FontSize="25" FontFamily="Arial" Height="38"/>
+            <Button x:Name="btnUpdateTask" Visibility="Hidden" Content="Modificar" HorizontalAlignment="Left" Margin="1005,693,0,0" VerticalAlignment="Top" Width="172" Height="42" RenderTransformOrigin="0.5,0.5" Foreground="White" BorderThickness="0" Background="#FF446A7B" FontSize="18" FontWeight="Bold" Click="Button_UpdateTask"/>
+            <Button x:Name="btnDeleteTask" Visibility="Hidden" Content="Eliminar" HorizontalAlignment="Left" Margin="807,693,0,0" VerticalAlignment="Top" Width="172" Height="42" RenderTransformOrigin="0.5,0.5" Foreground="White" BorderThickness="0" Background="#FFA93636" FontSize="18" FontWeight="Bold" Click="Button_DeleteTask"/>
         </Grid>
     </Grid>
 </Page>
