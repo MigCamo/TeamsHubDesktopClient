@@ -55,5 +55,20 @@ namespace TeamsHubDesktopClient.Gateways.Provider
                 return new UserValidationResponse { IsValid = false };
             }
         }
+
+        public bool PasswordRecovery(string userEmail)
+        {
+            try
+            {
+                HttpClientSingleton.SetAuthorizationHeader();
+                var result = HttpClientSingleton.Instance.GetAsync($"/TeamHub/Users/RecoveryPassword/{userEmail}").Result;
+                result.EnsureSuccessStatusCode();
+                return true;
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }
+        }
     }
 }
