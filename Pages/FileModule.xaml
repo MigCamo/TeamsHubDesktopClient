@@ -20,6 +20,6 @@
         <Button Content="Subir Documento" HorizontalAlignment="Left" Margin="1394,66,0,0" VerticalAlignment="Top" Height="58" Width="254" BorderBrush="#FF0C0101" Foreground="White" Background="Black" FontSize="20" FontFamily="Arial Black" Click="UploadFileFromSystem"/>
         <Image HorizontalAlignment="Left" Height="79" Margin="186,56,0,0" VerticalAlignment="Top" Width="77" Source="..\Resources\Pictures\ICON-BACK.png" MouseLeftButtonUp="BackToPreviousWindow"/>
         <local:NavigationBar Grid.Column="0" HorizontalAlignment="Left" Margin="0,0,0,0"/>
-        <WrapPanel x:Name="wpProjectFiles" Margin="199,144,102,42"/>
+        <WrapPanel x:Name="wpProjectFiles" Margin="199,144,65,42"/>
     </Grid>
 </Page>

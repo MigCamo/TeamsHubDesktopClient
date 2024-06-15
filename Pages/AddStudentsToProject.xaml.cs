@@ -44,7 +44,7 @@ namespace TeamsHubDesktopClient.Pages
             _TaskManagement = new TaskManagementRESTProvider();
             _StudentManager = new StudentManagementRESTProvider();
             _tasks = _TaskManagement.GetAllTaskByProject(ProjectSinglenton.projectDTO.IdProject);
-            users = _StudentManager.getStudentsByProject(ProjectSinglenton.projectDTO.IdProject);
+            users = _StudentManager.GetStudentsByProject(ProjectSinglenton.projectDTO.IdProject);
             ShowTask(_tasks);
             ShowStudents(users);
         }

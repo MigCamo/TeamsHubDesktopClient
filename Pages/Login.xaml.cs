@@ -229,12 +229,44 @@ namespace TeamsHubDesktopClient.Pages
             pwdPasswordRegister.BorderBrush = Brushes.White;
         }
 
-        private void Label_ShowForm(object sender, MouseButtonEventArgs e)
+        private void Label_ShowRegisterForm(object sender, MouseButtonEventArgs e)
         {
             grdLogin.Visibility = Visibility.Hidden;
             grdRegisterForm.Visibility = Visibility.Visible;
             txtEmail.Text = string.Empty;
             txtPassword.Text = string.Empty;
+        }
+
+        private void Label_ShowRecoverPasswordForm(object sender, MouseButtonEventArgs e)
+        {
+            grdLogin.Visibility = Visibility.Hidden;
+            grdRecoverPasswordForm.Visibility = Visibility.Visible;
+            txtEmail.Text = string.Empty;
+            txtPassword.Text = string.Empty;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            bool result;
+            if(!string.IsNullOrEmpty(txtRecoverPassword.Text.Trim()))
+            {
+                result = userIdentityManager.PasswordRecovery(txtRecoverPassword.Text.Trim());
+                if(result)
+                {
+                    MessageBox.Show("Se envio exitosamente la contraseña asu correo, verifiquelo para que recupere la contraseña");
+                }
+                else
+                {
+                    MessageBox.Show("Lo siento, pero no existe ningun correo que nos proporciono, en la base de datos");
+                }
+            }
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            grdRecoverPasswordForm.Visibility = Visibility.Hidden;
+            grdLogin.Visibility = Visibility.Visible;
+            txtRecoverPassword.Text = string.Empty;
         }
     }
 }
