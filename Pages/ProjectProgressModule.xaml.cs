@@ -1,6 +1,7 @@
 ﻿using LiveCharts;
 using LiveCharts.Definitions.Charts;
 using LiveCharts.Wpf;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -33,7 +34,7 @@ namespace TeamsHubDesktopClient.Pages
         {
             InitializeComponent();
             lblProyectName.Content = ProjectSinglenton.projectDTO.Name;
-            _TaskManagement = new TaskManagementRESTProvider();
+            _TaskManagement = App.ServiceProvider.GetService<TaskManagementRESTProvider>();
             _tasks = _TaskManagement.GetAllTaskByProject(ProjectSinglenton.projectDTO.IdProject);
             InitializeGraph();
             DataContext = this;

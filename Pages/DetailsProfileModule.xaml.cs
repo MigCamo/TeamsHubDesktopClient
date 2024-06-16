@@ -1,4 +1,5 @@
 ﻿using ItalianPizza.Auxiliary;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ using System.Windows.Shapes;
 using System.Xml.Linq;
 using TeamsHubDesktopClient.DTOs;
 using TeamsHubDesktopClient.Gateways.Provider;
+using TeamsHubDesktopClient.Resources;
 using TeamsHubDesktopClient.SinglentonClasses;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -32,7 +34,7 @@ namespace TeamsHubDesktopClient.Pages
         public DetailsProfileModule()
         {
             InitializeComponent();
-            studentManagement = new StudentManagementRESTProvider();
+            studentManagement = App.ServiceProvider.GetService<StudentManagementRESTProvider>();
             myUser = studentManagement.GetUserPersonalData(StudentSinglenton.ID);
             InitializeUserData(myUser);
 
@@ -71,23 +73,26 @@ namespace TeamsHubDesktopClient.Pages
             return student;
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_EditUser(object sender, RoutedEventArgs e)
         {
             List<string> errorMessages = AreUserFieldsValid();
             if (errorMessages.Count < 1)
             {
                 StudentDTO studentDTO = GetUserInfo();
-                bool result = await studentManagement.EditStudent(studentDTO);
-                if (result)
+                int result = await studentManagement.EditStudent(studentDTO);
+                if (result == (int)ServerResponse.SuccessfulRegistration)
                 {
                     CleanFields();
                     myUser = studentManagement.GetUserPersonalData(StudentSinglenton.ID);
                     InitializeUserData(myUser);
                 }
+                else if (result == (int)ServerResponse.NotRegistered)
+                {
+                    MessageBox.Show("Usuario no encontrado", "Lo siento, el usuario a modificar no se encuentra", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
                 else
                 {
-                    MessageBox.Show("Error en el servidor", "Lo siento hubo un problema con el servidor," +
-                        " intentelo mas tarde");
+                    MessageBox.Show("Lo siento, hubo un problema con los servidores", "Error en los servidores", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else

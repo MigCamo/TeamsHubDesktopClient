@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -14,104 +15,98 @@ namespace TeamsHubDesktopClient.Gateways.Provider
     public class TaskManagementRESTProvider
     {
 
+        ILogger<TaskManagementRESTProvider> _logger;
+        public TaskManagementRESTProvider(ILogger<TaskManagementRESTProvider> logger) 
+        {
+            _logger = logger;
+        }
+
         public async Task<bool> AddTaskAsync(TaskDTO newTask)
         {
+            bool response;
+
             try
             {
                 var json = JsonSerializer.Serialize(newTask);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
-                var request = new HttpRequestMessage(HttpMethod.Post, "/TeamHub/Task/")
-                {
-                    Content = content
-                };
-
                 HttpClientSingleton.SetAuthorizationHeader();
+                var request = new HttpRequestMessage(HttpMethod.Post, "/TeamHub/Task/") { Content = content };
                 var result = await HttpClientSingleton.Instance.SendAsync(request);
                 if (!result.IsSuccessStatusCode)
                 {
                     var responseContent = await result.Content.ReadAsStringAsync();
-                    Console.WriteLine($"Error: {result.StatusCode}, Content: {responseContent}");
-                    return false;
-                }
-                var responseContentSuccess = await result.Content.ReadAsStringAsync();
-                Console.WriteLine($"Response Content: {responseContentSuccess}");
-
-                bool response;
-                if (bool.TryParse(responseContentSuccess, out response))
-                {
-                    return response;
+                    response = false;
                 }
                 else
                 {
-                    Console.WriteLine("La respuesta no se pudo convertir a booleano.");
-                    return false;
+                    var responseContentSuccess = await result.Content.ReadAsStringAsync();
+                    bool.TryParse(responseContentSuccess, out response);
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error: " + ex.Message);
-                return false;
+                response = false;
+                _logger.LogError(ex.Message);
             }
+
+            return response;
         }
 
         public async Task<bool> UpdateTaskAsync(TaskDTO task)
         {
+            bool response;
+
             try
             {
                 var json = JsonSerializer.Serialize(task);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 HttpClientSingleton.SetAuthorizationHeader();
-                var request = new HttpRequestMessage(HttpMethod.Post, "/TeamHub/Task/up")
-                {
-                    Content = content
-                };
+                var request = new HttpRequestMessage(HttpMethod.Post, "/TeamHub/Task/up") { Content = content };
                 var result = await HttpClientSingleton.Instance.SendAsync(request);
                 if (!result.IsSuccessStatusCode)
                 {
                     var responseContent = await result.Content.ReadAsStringAsync();
-                    Console.WriteLine($"Error: {result.StatusCode}, Content: {responseContent}");
-                    return false;
-                }
-                var responseContentSuccess = await result.Content.ReadAsStringAsync();
-                Console.WriteLine($"Response Content: {responseContentSuccess}");
-
-                bool response;
-                if (bool.TryParse(responseContentSuccess, out response))
-                {
-                    return response;
+                    response = false;
                 }
                 else
                 {
-                    Console.WriteLine("La respuesta no se pudo convertir a booleano.");
-                    return false;
+                    var responseContentSuccess = await result.Content.ReadAsStringAsync();
+                    bool.TryParse(responseContentSuccess, out response);
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error: " + ex.Message);
-                return false;
+                response = false;
+                _logger.LogError(ex.Message);
             }
+
+            return response;
         }
 
         public List<TaskDTO> GetAllTaskByProject(int projectID)
         {
+            List<TaskDTO> response;
+
             try
             {
                 HttpClientSingleton.SetAuthorizationHeader();
                 var result = HttpClientSingleton.Instance.GetAsync($"/TeamHub/Task/{projectID}").Result;
                 result.EnsureSuccessStatusCode();
-                var response = result.Content.ReadFromJsonAsync<List<TaskDTO>>().Result;
-                return response;
+                response = result.Content.ReadFromJsonAsync<List<TaskDTO>>().Result;
             }
             catch (Exception ex)
             {
-
-                return null;
+                response = null;
+                _logger.LogError(ex.Message);
             }
+
+            return response;
         }
 
         public List<TaskDTO> GetTaskbyDate(DateTime startDate, DateTime endDate)
         {
+            List<TaskDTO> response;
+
             try
             {
                 var startDateFormat = $"{startDate.Year}-{startDate.Month:00}-{startDate.Day:00}";
@@ -119,51 +114,51 @@ namespace TeamsHubDesktopClient.Gateways.Provider
                 HttpClientSingleton.SetAuthorizationHeader();
                 var result = HttpClientSingleton.Instance.GetAsync($"/TeamHub/Task/{startDateFormat}/{endDateFormat}").Result;
                 result.EnsureSuccessStatusCode();
-                var response = result.Content.ReadFromJsonAsync<List<TaskDTO>>().Result;
-                return response;
+                response = result.Content.ReadFromJsonAsync<List<TaskDTO>>().Result;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return null;
+                response = null;
+                _logger.LogError(ex.Message);
             }
+
+            return response;
         }
 
         public async Task<bool> RemoveTaskAsync(int taskID)
         {
+            bool result;
+
             try
             {
                 HttpClientSingleton.SetAuthorizationHeader();
                 var requestUri = $"/TeamHub/Task/{taskID}";
                 var response = await HttpClientSingleton.Instance.DeleteAsync(requestUri);
                 response.EnsureSuccessStatusCode();
-
                 var responseContent = await response.Content.ReadAsStringAsync();
-                Console.WriteLine("Response content: " + responseContent); // Inspecciona el contenido de la respuesta
-
-                var options = new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                };
-
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
                 var apiResponse = JsonSerializer.Deserialize<ApiResponse>(responseContent, options);
-                return apiResponse?.Success ?? false;
+                result = apiResponse?.Success ?? false;
             }
             catch (HttpRequestException httpEx)
             {
-                Console.WriteLine($"HTTP Error: {httpEx.Message}");
-                return false;
+                result = false;
+                _logger.LogError(httpEx.Message);
             }
             catch (JsonException jsonEx)
             {
-                Console.WriteLine($"JSON Error: {jsonEx.Message}");
-                Console.WriteLine(jsonEx.InnerException); // Información adicional sobre el error
-                return false;
+                result = false;
+                _logger.LogError(jsonEx.Message);
+
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"General Error: {ex.Message}");
-                return false;
+                result = false;
+                _logger.LogError(ex.Message);
+
             }
+
+            return result;
         }
     }
 

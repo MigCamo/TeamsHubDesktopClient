@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Bson;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Bson;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +37,7 @@ namespace TeamsHubDesktopClient.Pages
             InitializeComponent();
             _projectID = projectID;
             lblProjectName.Content = ProjectSinglenton.projectDTO.Name;
-            _TaskManagement = new TaskManagementRESTProvider();
+            _TaskManagement = App.ServiceProvider.GetService<TaskManagementRESTProvider>();
             _tasks = _TaskManagement.GetAllTaskByProject(projectID);
             ShowTask(_tasks);
         }

@@ -1,4 +1,5 @@
 ﻿using ItalianPizza.Auxiliary;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ using System.Windows.Shapes;
 using TeamHubServiceProjects.DTOs;
 using TeamsHubDesktopClient.DTOs;
 using TeamsHubDesktopClient.Gateways.Provider;
+using TeamsHubDesktopClient.Resources;
 using TeamsHubDesktopClient.SinglentonClasses;
 
 namespace TeamsHubDesktopClient.Pages
@@ -34,8 +36,8 @@ namespace TeamsHubDesktopClient.Pages
         public Login()
         {
             InitializeComponent();
-            userIdentityManager = new UserIdentityManagerRESTProvider();
-            studentManager = new StudentManagementRESTProvider();
+            userIdentityManager = App.ServiceProvider.GetService<UserIdentityManagerRESTProvider>();
+            studentManager = App.ServiceProvider.GetService<StudentManagementRESTProvider>();
         }
 
         private async void Button_Login(object sender, RoutedEventArgs e)
@@ -49,24 +51,26 @@ namespace TeamsHubDesktopClient.Pages
                 };
 
                 var response = await userIdentityManager.ValidateUserAsync(loginRequest);
-                if (response != null && response.IsValid)
+                if(response != null)
                 {
-                    StudentSinglenton.ID = response.User.ID;
-                    StudentSinglenton.FullName = response.User.FullName;
-                    StudentSinglenton.Email = response.User.Email;
-                    HttpClientSingleton.UserToken = response.Token;
-                    NavigationService.Navigate(new Index());
+                    if (response.IsValid)
+                    {
+                        StudentSinglenton.ID = response.User.ID;
+                        StudentSinglenton.FullName = response.User.FullName;
+                        StudentSinglenton.Email = response.User.Email;
+                        HttpClientSingleton.UserToken = response.Token;
+                        NavigationService.Navigate(new Index());
+                    }
+                    else
+                    {
+                        MessageBox.Show("El correo y contraseña no coinciden, " +
+                            "intentelo de nuevamente");
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("El correo y contraseña no coinciden, " +
-                        "intentelo de nuevamente");
+                    MessageBox.Show("Lo siento hubo un problema con el servidor, intentelo mas tarde");
                 }
-            }
-            else
-            {
-                MessageBox.Show("Verifique que el correo y " +
-                    "contraseña no sea nulo ni tenga espacios en blanco");
             }
         }
 
@@ -103,87 +107,105 @@ namespace TeamsHubDesktopClient.Pages
 
         private bool AreLoginFieldsValid()
         {
-            bool band = true;
+            bool areFieldsValid = true;
 
-            if(string.IsNullOrEmpty(txtPassword.Text)) band = false;
-            if(string.IsNullOrEmpty(txtEmail.Text)) band = false;
+            if(string.IsNullOrEmpty(txtPassword.Text)) areFieldsValid = false;
+            if(string.IsNullOrEmpty(txtEmail.Text)) areFieldsValid = false;
 
-            return band;
+            if(!areFieldsValid)
+            {
+                MessageBox.Show("Verifique que el correo y " +
+                    "contraseña no sea nulo ni tenga espacios en blanco");
+            }
+
+            return areFieldsValid;
         }
 
-        private List<string> AreUserFieldsValid()
+        private bool AreUserFieldsValid()
         {
+            bool areUserFieldsValid = true;
             List<string> errorMessages = new List<string>();
+
             if (!RegexChecker.CheckName(txtName.Text))
             {
                 txtName.BorderBrush = Brushes.Red;
                 errorMessages.Add("'Nombres'");
+                areUserFieldsValid = false;
             }
 
             if (!RegexChecker.CheckLastName(txtLastName.Text))
             {
                 txtLastName.BorderBrush = Brushes.Red;
                 errorMessages.Add("'Apellido Paterno'");
+                areUserFieldsValid = false;
             }
 
             if (!RegexChecker.CheckSecondLastName(txtSurName.Text))
             {
                 txtSurName.BorderBrush = Brushes.Red;
                 errorMessages.Add("'Apellido Materno'");
+                areUserFieldsValid = false;
             }
 
             if (!RegexChecker.CheckName(txtNickName.Text))
             {
                 txtNickName.BorderBrush = Brushes.Red;
                 errorMessages.Add("'Apodo'");
+                areUserFieldsValid = false;
             }
 
             if (!RegexChecker.CheckEmail(txtEmailRegister.Text))
             {
                 txtEmailRegister.BorderBrush = Brushes.Red;
                 errorMessages.Add("'Email'");
+                areUserFieldsValid = false;
             }
 
             if (string.IsNullOrEmpty(pwdPasswordConfirm.Password))
             {
                 pwdPasswordConfirm.BorderBrush = Brushes.Red;
                 errorMessages.Add("'Confirmacion de contraseña'");
+                areUserFieldsValid = false;
             }
 
             if (string.IsNullOrEmpty(pwdPasswordRegister.Password))
             {
                 pwdPasswordRegister.BorderBrush = Brushes.Red;
                 errorMessages.Add("'Contraseña'");
+                areUserFieldsValid = false;
             }
 
-            return errorMessages;
+            if(!areUserFieldsValid)
+            {
+                string WrongFields = "'" + string.Join("', '", errorMessages) + "'";
+                MessageBox.Show("Campos invalidos", "Los campos " + WrongFields
+                    + " no deben ser nulos, ni debe tener caracteres especiales");
+            }
+
+            return areUserFieldsValid;
         }
 
         private void Button_RegisterUser(object sender, RoutedEventArgs e)
         {
-            List<string> errorMessages = AreUserFieldsValid();
-            if (errorMessages.Count < 1)
+            if (AreUserFieldsValid())
             {
                 StudentDTO studentDTO = GetUserInfo();
-                bool result = studentManager.AddStudent(studentDTO);
-                if (result)
+                int result = studentManager.AddStudent(studentDTO);
+                if (result == (int)ServerResponse.SuccessfulRegistration)
                 {
                     MessageBox.Show("Se registro correctamente el usuario en el sistema");
                     grdLogin.Visibility = Visibility.Visible;
                     grdRegisterForm.Visibility = Visibility.Hidden;
                     CleanFields();
                 }
+                else if (result == (int)ServerResponse.NotRegistered)
+                {
+                    MessageBox.Show("Usuario ya existente", "Lo siento, el usuario ya esta registrado", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
                 else
                 {
-                    MessageBox.Show("Error en el servidor", "Lo siento hubo un problema con el servidor," +
-                        " intentelo mas tarde");
+                    MessageBox.Show("Lo siento, hubo un problema con los servidores", "Error en los servidores", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-            }
-            else
-            {
-                string WrongFields = "'" + string.Join("', '", errorMessages) + "'";
-                MessageBox.Show("Campos invalidos", "Los campos " + WrongFields
-                    + " no deben ser nulos, ni debe tener caracteres especiales");
             }
         }
 
@@ -245,10 +267,10 @@ namespace TeamsHubDesktopClient.Pages
             txtPassword.Text = string.Empty;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_PasswordRecovery(object sender, RoutedEventArgs e)
         {
             bool result;
-            if(!string.IsNullOrEmpty(txtRecoverPassword.Text.Trim()))
+            if(!RegexChecker.CheckEmail(txtRecoverPassword.Text.Trim()))
             {
                 result = userIdentityManager.PasswordRecovery(txtRecoverPassword.Text.Trim());
                 if(result)
@@ -259,6 +281,10 @@ namespace TeamsHubDesktopClient.Pages
                 {
                     MessageBox.Show("Lo siento, pero no existe ningun correo que nos proporciono, en la base de datos");
                 }
+            }
+            else
+            {
+                MessageBox.Show("Lo siento, pero debe enviar un correo valido");
             }
         }
 
