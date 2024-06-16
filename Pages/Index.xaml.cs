@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Bson;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Bson;
 using System;
 using System.Collections.Generic;
 using System.IO.Packaging;
@@ -38,7 +39,7 @@ namespace TeamsHubDesktopClient.Pages
         {
             InitializeComponent();
             lblStudentName.Content = StudentSinglenton.FullName;
-            projectManagementRESTProvider = new ProjectManagementRESTProvider();
+            projectManagementRESTProvider = App.ServiceProvider.GetService<ProjectManagementRESTProvider>();
             _ = InitializeProjectsAsync();
             InitializeAnimation();
         }
@@ -215,7 +216,7 @@ namespace TeamsHubDesktopClient.Pages
 
         private void Button_RegisterProject(object sender, RoutedEventArgs e)
         {
-            if (!AreValidFields())
+            if (AreValidFields())
             {
                 ProjectDTO projectDTO = GetProjectInfo();
                 bool result = projectManagementRESTProvider.AddProject(projectDTO, StudentSinglenton.ID);
@@ -231,7 +232,6 @@ namespace TeamsHubDesktopClient.Pages
                     message = "Lo siento se ha presentado un problema en el servidor, intentelo nuevamente, mas tarde";
                     MessageBox.Show(message);
                 }
-                MessageBox.Show(message);
             }
             else
             {
@@ -241,7 +241,7 @@ namespace TeamsHubDesktopClient.Pages
 
         private async void Button_UpdateProject(object sender, RoutedEventArgs e)
         {
-            if (!AreValidFields())
+            if (AreValidFields())
             {
                 ProjectDTO projectDTO = GetProjectInfo();
                 bool result = await projectManagementRESTProvider.UpdateProjectAsync(projectDTO);
@@ -276,12 +276,12 @@ namespace TeamsHubDesktopClient.Pages
         {
             bool band = true;
 
-            if (txtName.Text.Length == 0)
+            if (txtName.Text.Length <= 0)
             {
                 band = false;
             }
 
-            if (cboStatus.SelectedIndex != -1)
+            if (cboStatus.SelectedIndex == -1)
             {
                 band = false;
             }

@@ -114,7 +114,7 @@
             </Rectangle>
             <Image HorizontalAlignment="Left" Height="26" Margin="519,484,0,0" VerticalAlignment="Top" Width="29" Source="D:\Workspace-C#\TeamsHubDesktopClient\Resources\Pictures\ICON-EMAIL.png" RenderTransformOrigin="0.471,0.59"/>
             <TextBox x:Name="txtRecoverPassword" HorizontalAlignment="Left" Margin="557,477,0,0" TextWrapping="Wrap" Text="" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="669" Height="41" Background="{x:Null}" BorderBrush="{x:Null}" FontFamily="Arial" FontSize="18" Foreground="White"/>
-            <Button Content="Enviar contraseña" HorizontalAlignment="Left" Margin="892,559,0,0" VerticalAlignment="Top" Width="347" Height="45" Background="#FF3B6281" Foreground="White" FontSize="20" FontWeight="Bold" Click="Button_Click"/>
+            <Button Content="Enviar contraseña" HorizontalAlignment="Left" Margin="892,559,0,0" VerticalAlignment="Top" Width="347" Height="45" Background="#FF3B6281" Foreground="White" FontSize="20" FontWeight="Bold" Click="Button_PasswordRecovery"/>
             <Button Content="Cancelar" HorizontalAlignment="Left" Margin="503,559,0,0" VerticalAlignment="Top" Width="347" Height="45" Background="#FF3B6281" Foreground="White" FontSize="20" FontWeight="Bold" Click="Button_Click_1"/>
         </Grid>
         

@@ -25,7 +25,7 @@
         <PasswordBox x:Name="pwdPasswordRegister" HorizontalAlignment="Left" Margin="1147,349,0,0" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="336" Height="36" Background="{x:Null}" Foreground="#FFFFF3F3" BorderBrush="#FFADA5A5" FontFamily="Arial" FontSize="22"/>
         <Label Content="Confirmacion Contraseña*" HorizontalAlignment="Left" Margin="898,429,0,0" VerticalAlignment="Top" Foreground="White" FontSize="18" FontWeight="Bold"/>
         <PasswordBox x:Name="pwdPasswordConfirm" HorizontalAlignment="Left" Margin="1147,428,0,0" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="336" Height="36" Background="{x:Null}" Foreground="#FFFFF3F3" BorderBrush="#FFADA5A5" FontFamily="Arial" FontSize="22"/>
-        <Button Content="Modificar" HorizontalAlignment="Left" Margin="1281,559,0,0" VerticalAlignment="Top" Height="46" Width="218" FontSize="20" Foreground="White" Background="#FF1E88B5" BorderBrush="#FF1E88B5" FontWeight="Bold" Click="Button_Click"/>
+        <Button Content="Modificar" HorizontalAlignment="Left" Margin="1281,559,0,0" VerticalAlignment="Top" Height="46" Width="218" FontSize="20" Foreground="White" Background="#FF1E88B5" BorderBrush="#FF1E88B5" FontWeight="Bold" Click="Button_EditUser"/>
         <Button Content="Cancelar" HorizontalAlignment="Left" Margin="1038,559,0,0" VerticalAlignment="Top" Height="46" Width="218" Background="#FF1E88B5" BorderBrush="#FF1E88B5" Foreground="#FFFBF5F5" FontSize="20" FontWeight="Bold" Click="Button_CancelRegister"/>
     </Grid>
 </UserControl>

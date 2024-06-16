@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,59 +14,78 @@ namespace TeamsHubDesktopClient.Gateways.Provider
 {
     public class ProjectManagementRESTProvider
     {
-        public ProjectManagementRESTProvider() { }
+        private readonly ILogger<ProjectManagementRESTProvider> _logger;
+
+        public ProjectManagementRESTProvider(ILogger<ProjectManagementRESTProvider> logger) 
+        {
+            _logger = logger;
+        }
 
         public async Task<List<ProjectDTO>> GetAllMyProjectsAsync(int studentID)
         {
+            List<ProjectDTO> projects;
+
             try
             {
                 HttpClientSingleton.SetAuthorizationHeader();
                 var response = await HttpClientSingleton.Instance.GetAsync($"/TeamHub/Projects/MyProjects/{studentID}");
                 response.EnsureSuccessStatusCode();
-                var projects = await response.Content.ReadFromJsonAsync<List<ProjectDTO>>();
-                return projects;
+                projects = await response.Content.ReadFromJsonAsync<List<ProjectDTO>>();
             }
             catch (Exception ex)
             {
-                return new List<ProjectDTO>();
+                projects = null;
+                _logger.LogError(ex.Message);
             }
+
+            return projects;
         }
 
         public bool AddProject(ProjectDTO project, int idStudent)
         {
+            bool result;
+
             try
             {
                 var request = new { ProjectNew = project, StudentID = idStudent };
                 HttpClientSingleton.SetAuthorizationHeader();
-                var result = HttpClientSingleton.Instance.PostAsJsonAsync($"/TeamHub/Projects/AddProject", request).Result;
-                result.EnsureSuccessStatusCode();
-                var response = result.Content.ReadFromJsonAsync<Boolean>().Result;
-                return response;
+                var response = HttpClientSingleton.Instance.PostAsJsonAsync($"/TeamHub/Projects/AddProject", request).Result;
+                response.EnsureSuccessStatusCode();
+                result = response.Content.ReadFromJsonAsync<Boolean>().Result;
             }
             catch (Exception ex)
             {
-                return false;
+                result = false;
+                _logger.LogError(ex.Message);
             }
+
+            return result;
         }
 
         public ProjectDTO GetProject(int idProject)
         {
+            ProjectDTO projectDTO;
+
             try
             {
                 HttpClientSingleton.SetAuthorizationHeader();
                 var result = HttpClientSingleton.Instance.GetAsync($"/TeamHub/Projects/Project/{idProject}").Result;
                 result.EnsureSuccessStatusCode();
-                var response = result.Content.ReadFromJsonAsync<ProjectDTO>().Result;
-                return response;
+                projectDTO = result.Content.ReadFromJsonAsync<ProjectDTO>().Result;
             }
             catch (Exception ex)
             {
-                return null;
+                projectDTO = null;
+                _logger.LogError(ex.Message);
             }
+
+            return projectDTO;
         }
 
         public List<ProjectDTO> GetProjectsbyDate(DateTime startDate, DateTime endDate)
         {
+            List<ProjectDTO> projects;
+
             try
             {
                 HttpClientSingleton.SetAuthorizationHeader();
@@ -73,51 +93,57 @@ namespace TeamsHubDesktopClient.Gateways.Provider
                 var endDateFormat = $"{endDate.Year}-{endDate.Month:00}-{endDate.Day:00}";
                 var result = HttpClientSingleton.Instance.GetAsync($"/TeamHub/Projects/MyProjects/{startDateFormat}/{endDateFormat}").Result;
                 result.EnsureSuccessStatusCode();
-                var response = result.Content.ReadFromJsonAsync<List<ProjectDTO>>().Result;
-                return response;
+                projects = result.Content.ReadFromJsonAsync<List<ProjectDTO>>().Result;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return null;
+                projects = null;
+                _logger.LogError(ex.Message);
             }
+
+            return projects;
         }
 
         public async Task<bool> RemoveProjectAsync(ProjectDTO project)
         {
+            bool result;
+
             try
             {
                 HttpClientSingleton.SetAuthorizationHeader();
                 var requestUri = $"/TeamHub/Projects/DeleteProject?idProject={project.IdProject}";
                 var response = await HttpClientSingleton.Instance.DeleteAsync(requestUri);
                 response.EnsureSuccessStatusCode();
-                var result = await response.Content.ReadFromJsonAsync<bool>();
-
-                return result;
+                result = await response.Content.ReadFromJsonAsync<bool>();
             }
             catch (Exception ex)
             {
-                return false;
+                result = false;
+                _logger.LogError(ex.Message);
             }
+
+            return result;
         }
 
         public async Task<bool> UpdateProjectAsync(ProjectDTO projectNew)
         {
+            bool result;
+
             try
             {
                 HttpClientSingleton.SetAuthorizationHeader();
                 var content = JsonContent.Create(projectNew);
                 var response = await HttpClientSingleton.Instance.PutAsync("/TeamHub/Projects/UpdateProject", content);
                 response.EnsureSuccessStatusCode();
-                var result = await response.Content.ReadFromJsonAsync<bool>();
-
-                return result;
+                result = await response.Content.ReadFromJsonAsync<bool>();
             }
             catch (Exception ex)
             {
-                return false;
+                result = false;
+                _logger.LogError(ex.Message);
             }
+
+            return result;
         }
-
-
     }
 }

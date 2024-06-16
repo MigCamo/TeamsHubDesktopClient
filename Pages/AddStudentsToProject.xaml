@@ -28,7 +28,7 @@
         <Label x:Name="lblStartDate" Content="Fecha de inicio: " HorizontalAlignment="Left" Margin="215,171,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="25" FontWeight="Bold" Foreground="#FFF5EEEE"/>
         <Label x:Name="lblEndDate" Content="Fecha de finalizacion: " HorizontalAlignment="Left" Margin="215,221,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="25" FontWeight="Bold" Foreground="#FFF5EEEE"/>
         <Label Content="Actividades" HorizontalAlignment="Left" Margin="405,309,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="25" FontWeight="Bold" Foreground="#FFF5EEEE"/>
-        <Button Content="Agregar" HorizontalAlignment="Left" Margin="1533,210,0,0" VerticalAlignment="Top" Height="49" Width="141" BorderBrush="#FF0C0101" Foreground="White" Background="Black" FontSize="17" FontFamily="Arial Black" Click="Button_Click"/>
+        <Button Content="Agregar" HorizontalAlignment="Left" Margin="1533,210,0,0" VerticalAlignment="Top" Height="49" Width="141" BorderBrush="#FF0C0101" Foreground="White" Background="Black" FontSize="17" FontFamily="Arial Black" Click="Button_RegisterUser"/>
         <TextBox x:Name="txtSearch" HorizontalAlignment="Left" Margin="1005,215,0,0" TextWrapping="Wrap" Text="" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="509" Height="41" Background="#FFA3A3A3" Foreground="#FF190D0D" FontSize="20"/>
         <WrapPanel x:Name="wpTeam" Margin="981,284,69,30"/>
         <WrapPanel x:Name="wpTask" Margin="164,358,872,30"/>

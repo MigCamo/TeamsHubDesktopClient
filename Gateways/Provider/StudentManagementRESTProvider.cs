@@ -8,81 +8,104 @@ using TeamsHubDesktopClient.SinglentonClasses;
 using System.Net.Http.Json;
 using System.Security.Cryptography;
 using TeamHubServiceProjects.DTOs;
+using Microsoft.Extensions.Logging;
+using TeamsHubDesktopClient.Resources;
 
 namespace TeamsHubDesktopClient.Gateways.Provider
 {
     public class StudentManagementRESTProvider
     {
-        public StudentManagementRESTProvider() { }
+        private readonly ILogger<StudentManagementRESTProvider> _logger;
 
-        public bool AddStudent(StudentDTO newStudent)
+        public StudentManagementRESTProvider(ILogger<StudentManagementRESTProvider> logger) 
         {
+            _logger = logger;
+        }
+
+        public int AddStudent(StudentDTO newStudent)
+        {
+            int result;
+
             try
             {
-                var result = HttpClientSingleton.Instance.PostAsJsonAsync($"/TeamHub/Users", newStudent).Result;
-                result.EnsureSuccessStatusCode();
-                var response = result.Content.ReadFromJsonAsync<Boolean>().Result;
-                return true;
+                var response = HttpClientSingleton.Instance.PostAsJsonAsync($"/TeamHub/Users", newStudent).Result;
+                response.EnsureSuccessStatusCode();
+                result = response.Content.ReadFromJsonAsync<Int16>().Result;
             }
             catch (Exception ex)
             {
-                return false;
+                result = (int)ServerResponse.ErrorServer;
+                _logger.LogError(ex.Message);
             }
+
+            return result;
         }
 
-        public bool AddStudentToProject(int idStudent, int idProject)
+        public int AddStudentToProject(int idStudent, int idProject)
         {
-            try
-            {
-                HttpClientSingleton.SetAuthorizationHeader();
-                var result = HttpClientSingleton.Instance.PostAsJsonAsync($"/TeamHub/Users/AddToProject/{idProject}/{idStudent}", (object)null).Result;
-                result.EnsureSuccessStatusCode();
-                var response = result.Content.ReadFromJsonAsync<Boolean>().Result;
-                return response;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-        }
+            int result;
 
-        public bool DeleteStudentToProject(int idStudent, int idProject)
-        {
             try
             {
                 HttpClientSingleton.SetAuthorizationHeader();
-                var result = HttpClientSingleton.Instance.DeleteAsync($"/TeamHub/Users/RemoveOfProject/{idProject}/{idStudent}").Result;
-                result.EnsureSuccessStatusCode();
-                var response = result.Content.ReadFromJsonAsync<Boolean>().Result;
-                return response;
+                var response = HttpClientSingleton.Instance.PostAsJsonAsync($"/TeamHub/Users/AddToProject/{idProject}/{idStudent}", (object)null).Result;
+                response.EnsureSuccessStatusCode();
+                result = response.Content.ReadFromJsonAsync<Int16>().Result;
             }
             catch (Exception ex)
             {
-                return false;
+                result = (int)ServerResponse.ErrorServer;
+                _logger.LogError(ex.Message);
             }
+
+            return result;
         }
 
-        public async Task<bool> EditStudent(StudentDTO editStudent)
+        public int DeleteStudentToProject(int idStudent, int idProject)
         {
+            int result;
+
+            try
+            {
+                HttpClientSingleton.SetAuthorizationHeader();
+                var response = HttpClientSingleton.Instance.DeleteAsync($"/TeamHub/Users/RemoveOfProject/{idProject}/{idStudent}").Result;
+                response.EnsureSuccessStatusCode();
+                result = response.Content.ReadFromJsonAsync<Int16>().Result;
+            }
+            catch (Exception ex)
+            {
+                result = (int)ServerResponse.ErrorServer;
+                _logger.LogError(ex.Message);
+            }
+
+            return result;
+        }
+
+        public async Task<int> EditStudent(StudentDTO editStudent)
+        {
+            int result;
+
             try
             {
                 HttpClientSingleton.SetAuthorizationHeader();
                 var content = JsonContent.Create(editStudent);
                 var response = await HttpClientSingleton.Instance.PutAsync("/TeamHub/Users/Edit", content);
                 response.EnsureSuccessStatusCode();
-                var result = await response.Content.ReadFromJsonAsync<bool>();
-
-                return result;
+                result = await response.Content.ReadFromJsonAsync<Int16>();
             }
             catch (Exception ex)
             {
-                return false;
+                result = (int)ServerResponse.ErrorServer;
+                _logger.LogError(ex.Message);
             }
+
+            return result;
         }
 
         public List<User> GetStudentsByProject(int idProject)
         {
-            List<User> response = null;
+            List<User> response;
+
             try
             {
                 HttpClientSingleton.SetAuthorizationHeader();
@@ -90,39 +113,42 @@ namespace TeamsHubDesktopClient.Gateways.Provider
                 result.EnsureSuccessStatusCode();
                 response = result.Content.ReadFromJsonAsync<List<User>>().Result;
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                response = null;
+                _logger.LogError(ex.Message);
             }
+
             return response;
         }
 
         public User GetStudentInfo(string student)
         {
-            User response = null;
-            List<User> responseList = null;
+            User user;
+            List<User> responseList;
+
             try
             {
                 var encodedStudent = Uri.EscapeDataString(student);
                 HttpClientSingleton.SetAuthorizationHeader();
-                var result = HttpClientSingleton.Instance.GetAsync($"/TeamHub/Users/Search/{encodedStudent}").Result;
-                result.EnsureSuccessStatusCode();
-                responseList = result.Content.ReadFromJsonAsync<List<User>>().Result;
-                response = responseList.FirstOrDefault();
+                var response = HttpClientSingleton.Instance.GetAsync($"/TeamHub/Users/Search/{encodedStudent}").Result;
+                response.EnsureSuccessStatusCode();
+                responseList = response.Content.ReadFromJsonAsync<List<User>>().Result;
+                user = responseList.FirstOrDefault();
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Exception: {ex.Message}");
-                Console.WriteLine(ex.StackTrace);
-                throw;
+                user = null;
+                _logger.LogError(ex.Message);
             }
-            return response;
+
+            return user;
         }
 
         public StudentDTO GetUserPersonalData(int studentID)
         {
-            StudentDTO response = null;
+            StudentDTO response;
+
             try
             {
                 HttpClientSingleton.SetAuthorizationHeader();
@@ -132,10 +158,10 @@ namespace TeamsHubDesktopClient.Gateways.Provider
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Exception: {ex.Message}");
-                Console.WriteLine(ex.StackTrace);
-                throw;
+                response = null;
+                _logger.LogError(ex.Message);
             }
+
             return response;
         }
     }

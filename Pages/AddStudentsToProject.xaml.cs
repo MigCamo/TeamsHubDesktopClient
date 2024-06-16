@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,7 @@ using System.Windows.Shapes;
 using TeamHubServiceProjects.DTOs;
 using TeamsHubDesktopClient.DTOs;
 using TeamsHubDesktopClient.Gateways.Provider;
+using TeamsHubDesktopClient.Resources;
 using TeamsHubDesktopClient.SinglentonClasses;
 
 namespace TeamsHubDesktopClient.Pages
@@ -33,6 +35,8 @@ namespace TeamsHubDesktopClient.Pages
         public AddStudentsToProject()
         {
             InitializeComponent();
+            _TaskManagement = App.ServiceProvider.GetService<TaskManagementRESTProvider>();
+            _StudentManager = App.ServiceProvider.GetService<StudentManagementRESTProvider>();
             InitializeInformation();
         }
 
@@ -41,8 +45,6 @@ namespace TeamsHubDesktopClient.Pages
             lblProjectName.Content = ProjectSinglenton.projectDTO.Name;
             lblStartDate.Content = "Fecha de inicio: " + ProjectSinglenton.projectDTO.StartDate.ToString();
             lblEndDate.Content = "Fecha de cierre: " + ProjectSinglenton.projectDTO.EndDate.ToString();
-            _TaskManagement = new TaskManagementRESTProvider();
-            _StudentManager = new StudentManagementRESTProvider();
             _tasks = _TaskManagement.GetAllTaskByProject(ProjectSinglenton.projectDTO.IdProject);
             users = _StudentManager.GetStudentsByProject(ProjectSinglenton.projectDTO.IdProject);
             ShowTask(_tasks);
@@ -201,23 +203,29 @@ namespace TeamsHubDesktopClient.Pages
             wpTeam.Children.Add(scrollViewer);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_RegisterUser(object sender, RoutedEventArgs e)
         {
             if(!string.IsNullOrEmpty(txtSearch.Text))
             {
                 User student = _StudentManager.GetStudentInfo(txtSearch.Text);
                 if(student != null)
                 {
-                    bool result = _StudentManager.AddStudentToProject(student.ID, ProjectSinglenton.projectDTO.IdProject);
-                    if(!result)
+                    int result = _StudentManager.AddStudentToProject(student.ID, ProjectSinglenton.projectDTO.IdProject);
+
+                    if(result == (int)ServerResponse.SuccessfulRegistration)
                     {
                         InitializeInformation();
                         MessageBox.Show("Se registro correctamente", "Exitoso", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else if (result == (int)ServerResponse.NotRegistered)
+                    {
+                        MessageBox.Show("Usuario ya existente", "Lo siento, el usuario ya esta registrado", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     else
                     {
                         MessageBox.Show("Lo siento, hubo un problema con los servidores", "Error en los servidores", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
+
                 }
             }
         }

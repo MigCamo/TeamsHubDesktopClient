@@ -21,6 +21,7 @@ using TeamsHubDesktopClient.SinglentonClasses;
 using TeamsHubDesktopClient.Gateways.Provider;
 using System.Windows.Media.Effects;
 using Environment = System.Environment;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace TeamsHubDesktopClient.Pages
 {
@@ -37,7 +38,7 @@ namespace TeamsHubDesktopClient.Pages
         {
             InitializeComponent();
             lblProjectName.Content = ProjectSinglenton.projectDTO.Name;
-            FileManagementRESTProvider = new FileManagementRESTProvider();
+            FileManagementRESTProvider = App.ServiceProvider.GetService<FileManagementRESTProvider>();
             _ = LoadFilesVisual();
         }
 

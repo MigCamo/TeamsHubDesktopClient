@@ -14,61 +14,59 @@ namespace TeamsHubDesktopClient.Gateways.Provider
 {
     public class UserIdentityManagerRESTProvider
     {
-        public UserIdentityManagerRESTProvider(){}
+        ILogger<UserIdentityManagerRESTProvider> _logger;
 
-        public UserValidationResponse ValidateUser(SessionLoginRequest sessionLoginRequest)
+        public UserIdentityManagerRESTProvider(ILogger<UserIdentityManagerRESTProvider> logger)
         {
-            try
-            {
-                byte[] encodedPassword = new UTF8Encoding().GetBytes(sessionLoginRequest.password);
-                byte[] hash = ((HashAlgorithm)CryptoConfig.CreateFromName("MD5")).ComputeHash(encodedPassword);
-                string passwordMD5 = BitConverter.ToString(hash).Replace("-", string.Empty).ToLower();
-                //sessionLoginRequest.password = passwordMD5;
-
-                var resultado = HttpClientSingleton.Instance.PostAsJsonAsync<SessionLoginRequest>($"/TeamHub/Sessions/validateUser", sessionLoginRequest).Result;
-                resultado.EnsureSuccessStatusCode();
-                var respuesta = resultado.Content.ReadFromJsonAsync<UserValidationResponse>().Result;
-                return respuesta;
-            }
-            catch (Exception e)
-            {
-                return new UserValidationResponse() { IsValid = false };
-            }
+            _logger = logger;
         }
 
         public async Task<UserValidationResponse> ValidateUserAsync(SessionLoginRequest sessionLoginRequest)
         {
+            UserValidationResponse userValidationResponse;
+
             try
             {
-                byte[] encodedPassword = new UTF8Encoding().GetBytes(sessionLoginRequest.password);
-                byte[] hash = ((HashAlgorithm)CryptoConfig.CreateFromName("MD5")).ComputeHash(encodedPassword);
-                string passwordMD5 = BitConverter.ToString(hash).Replace("-", string.Empty).ToLower();
-                //sessionLoginRequest.password = passwordMD5;
-
+                //sessionLoginRequest.password = EncryptPassword(sessionLoginRequest.password);
                 var response = await HttpClientSingleton.Instance.PostAsJsonAsync("/TeamHub/Sessions/validateUser", sessionLoginRequest);
                 response.EnsureSuccessStatusCode();
-                var result = await response.Content.ReadFromJsonAsync<UserValidationResponse>();
-                return result;
+                userValidationResponse = await response.Content.ReadFromJsonAsync<UserValidationResponse>();
+                _logger.LogInformation("login exitoso");
             }
             catch (Exception e)
             {
-                return new UserValidationResponse { IsValid = false };
+                userValidationResponse = null;
             }
+
+            return userValidationResponse;
         }
 
         public bool PasswordRecovery(string userEmail)
         {
+            bool result;
+
             try
             {
                 HttpClientSingleton.SetAuthorizationHeader();
-                var result = HttpClientSingleton.Instance.GetAsync($"/TeamHub/Users/RecoveryPassword/{userEmail}").Result;
-                result.EnsureSuccessStatusCode();
-                return true;
+                var response = HttpClientSingleton.Instance.GetAsync($"/TeamHub/Users/RecoveryPassword/{userEmail}").Result;
+                response.EnsureSuccessStatusCode();
+                result = true;
             }
             catch (System.Exception)
             {
-                return false;
+                result = false;
             }
+
+            return result;
+        }
+
+        private String EncryptPassword(String password)
+        {
+            byte[] encodedPassword = new UTF8Encoding().GetBytes(password);
+            byte[] hash = ((HashAlgorithm)CryptoConfig.CreateFromName("MD5")).ComputeHash(encodedPassword);
+            string passwordMD5 = BitConverter.ToString(hash).Replace("-", string.Empty).ToLower();
+            
+            return passwordMD5;
         }
     }
 }
