@@ -241,12 +241,10 @@ namespace TeamsHubDesktopClient.Pages
             string filePath = System.IO.Path.Combine(fileDirectory, fileName);
             try
             {
-                lblProjectName.Content = "EMTRP AIQO";
                 if (!Directory.Exists(fileDirectory))
                 {
                     Directory.CreateDirectory(fileDirectory);
                 }
-
 
                 File.WriteAllBytes(filePath, fileBytes);
                 Console.WriteLine($"Archivo guardado en: {filePath}");
