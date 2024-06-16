@@ -7,6 +7,7 @@ using TeamsHubDesktopClient.DTOs;
 using TeamsHubDesktopClient.SinglentonClasses;
 using System.Net.Http.Json;
 using System.Security.Cryptography;
+using TeamHubServiceProjects.DTOs;
 
 namespace TeamsHubDesktopClient.Gateways.Provider
 {
@@ -61,15 +62,17 @@ namespace TeamsHubDesktopClient.Gateways.Provider
             }
         }
 
-        public bool EditStudent(StudentDTO editStudent)
+        public async Task<bool> EditStudent(StudentDTO editStudent)
         {
             try
             {
                 HttpClientSingleton.SetAuthorizationHeader();
-                var result = HttpClientSingleton.Instance.PutAsJsonAsync($"/TeamHub/Users", editStudent).Result;
-                result.EnsureSuccessStatusCode();
-                var response = result.Content.ReadFromJsonAsync<Boolean>().Result;
-                return response;
+                var content = JsonContent.Create(editStudent);
+                var response = await HttpClientSingleton.Instance.PutAsync("/TeamHub/Users/Edit", content);
+                response.EnsureSuccessStatusCode();
+                var result = await response.Content.ReadFromJsonAsync<bool>();
+
+                return result;
             }
             catch (Exception ex)
             {
@@ -77,7 +80,7 @@ namespace TeamsHubDesktopClient.Gateways.Provider
             }
         }
 
-        public List<User> getStudentsByProject(int idProject)
+        public List<User> GetStudentsByProject(int idProject)
         {
             List<User> response = null;
             try
@@ -117,5 +120,23 @@ namespace TeamsHubDesktopClient.Gateways.Provider
             return response;
         }
 
+        public StudentDTO GetUserPersonalData(int studentID)
+        {
+            StudentDTO response = null;
+            try
+            {
+                HttpClientSingleton.SetAuthorizationHeader();
+                var result = HttpClientSingleton.Instance.GetAsync($"/TeamHub/Users/GetUserInformation/{studentID}").Result;
+                result.EnsureSuccessStatusCode();
+                response = result.Content.ReadFromJsonAsync<StudentDTO>().Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+                Console.WriteLine(ex.StackTrace);
+                throw;
+            }
+            return response;
+        }
     }
 }

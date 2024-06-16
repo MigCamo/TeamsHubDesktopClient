@@ -113,8 +113,8 @@ namespace TeamsHubDesktopClient.Pages
                     {
                         Height = 65,
                         Width = 1450,
-                        RadiusX = 15,
-                        RadiusY = 15,
+                        RadiusX = 30,
+                        RadiusY = 30,
                         Fill = new SolidColorBrush(Color.FromRgb(51, 47, 47)),
                         Margin = new Thickness(0, 0, 0, 0),
                     };
@@ -135,7 +135,7 @@ namespace TeamsHubDesktopClient.Pages
                         Height = 50,
                         Width = 50,
                         Source = new BitmapImage(new Uri("..\\Resources\\Pictures\\ICON-ARCHIVO.png", UriKind.RelativeOrAbsolute)),
-                        Margin = new Thickness(-1370, 0, 0, 0),
+                        Margin = new Thickness(-1350, 0, 0, 0),
                     };
                     grdContainer.Children.Add(imgAddProductIcon);
 
@@ -145,7 +145,7 @@ namespace TeamsHubDesktopClient.Pages
                         Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255)),
                         FontWeight = FontWeights.Black,
                         FontSize = 18,
-                        Margin = new Thickness(70, 0, 0, 0),
+                        Margin = new Thickness(90, 0, 0, 0),
                     };
                     grdContainer.Children.Add(lblNameCustomerOrder);
 
@@ -154,21 +154,23 @@ namespace TeamsHubDesktopClient.Pages
                         Orientation = Orientation.Horizontal,
                         HorizontalAlignment = HorizontalAlignment.Right,
                         VerticalAlignment = VerticalAlignment.Center,
-                        Margin = new Thickness(0, 0, 10, 0) // Ajustar el margen según sea necesario
+                        Margin = new Thickness(0, 0, 10, 0)
                     };
 
                     Style buttonStyle = new Style(typeof(Button));
-                    buttonStyle.Setters.Add(new Setter(Control.BorderThicknessProperty, new Thickness(1))); // Grosor del borde
+                    buttonStyle.Setters.Add(new Setter(Control.BorderThicknessProperty, new Thickness(1))); 
                     buttonStyle.Setters.Add(new Setter(Control.BorderBrushProperty, new SolidColorBrush(Colors.Black))); // Color del borde
                     buttonStyle.Setters.Add(new Setter(Control.PaddingProperty, new Thickness(10))); // Relleno interno
 
                     Button btnDelete = new Button
                     {
                         Content = "Eliminar",
-                        Margin = new Thickness(0, 0, 5, 0),
+                        Margin = new Thickness(-95, 0, 5, 0),
                         Background = new SolidColorBrush(Color.FromRgb(255, 69, 58)),
                         Foreground = new SolidColorBrush(Colors.White),
-                        Style = buttonStyle
+                        FontWeight = FontWeights.Bold,
+                        Width = 100,
+                        Height = 40,
                     };
 
                     btnDelete.Click += async (sender, e) =>
@@ -187,10 +189,12 @@ namespace TeamsHubDesktopClient.Pages
                     Button btnDownload = new Button
                     {
                         Content = "Descargar",
-                        Margin = new Thickness(0, 0, 0, 0),
+                        Margin = new Thickness(-15, 0, 0, 0),
                         Background = new SolidColorBrush(Color.FromRgb(50, 205, 50)),
                         Foreground = new SolidColorBrush(Colors.White),
-                        Style = buttonStyle
+                        FontWeight = FontWeights.Bold,
+                        Width = 100,
+                        Height = 40,
                     };
 
                     btnDownload.Click += async (sender, e) =>
