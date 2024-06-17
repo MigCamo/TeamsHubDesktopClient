@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Google.Protobuf.WellKnownTypes;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Bson;
 using System;
 using System.Collections.Generic;
@@ -98,7 +99,7 @@ namespace TeamsHubDesktopClient.Pages
                 rectBackground.Effect = dropShadowEffect;
                 grdContainer.Children.Add(rectBackground);
 
-                Image imgAddProductIcon = new Image
+                Image imgProjectIcon = new Image
                 {
                     Height = 160,
                     Width = 160,
@@ -106,9 +107,9 @@ namespace TeamsHubDesktopClient.Pages
                     Stretch = Stretch.Fill,
                     Margin = new Thickness(-1240, 0, 0, 0),
                 };
-                grdContainer.Children.Add(imgAddProductIcon);
+                grdContainer.Children.Add(imgProjectIcon);
 
-                Label lblNameCustomerOrder = new Label
+                Label lblProjectName = new Label
                 {
                     Content = project.Name,
                     Foreground = new SolidColorBrush(Color.FromRgb(33, 37, 41)),
@@ -116,11 +117,11 @@ namespace TeamsHubDesktopClient.Pages
                     FontSize = 30,
                     Margin = new Thickness(190, 25, 0, 0),
                 };
-                grdContainer.Children.Add(lblNameCustomerOrder);
+                grdContainer.Children.Add(lblProjectName);
 
 
                 string dateAux = $"{project.StartDate:yyyy-MM-dd}";
-                Label lblOrderCostCustomer = new Label
+                Label lblStartDate = new Label
                 {
                     Content = "Fecha de inicio: " + dateAux,
                     Foreground = new SolidColorBrush(Color.FromRgb(33, 37, 41)),
@@ -128,10 +129,10 @@ namespace TeamsHubDesktopClient.Pages
                     FontSize = 20,
                     Margin = new Thickness(190, 85, 0, 0),
                 };
-                grdContainer.Children.Add(lblOrderCostCustomer);
+                grdContainer.Children.Add(lblStartDate);
 
                 dateAux = $"{project.EndDate:yyyy-MM-dd}";
-                Label lblOrderCostCustomer12 = new Label
+                Label lblEndDate = new Label
                 {
                     Content = "Fecha de cierre: " + dateAux,
                     Foreground = new SolidColorBrush(Color.FromRgb(33, 37, 41)),
@@ -139,7 +140,7 @@ namespace TeamsHubDesktopClient.Pages
                     FontSize = 20,
                     Margin = new Thickness(190, 120, 0, 0),
                 };
-                grdContainer.Children.Add(lblOrderCostCustomer12);
+                grdContainer.Children.Add(lblEndDate);
 
                 Label lblProjectStatus = new Label
                 {
@@ -200,7 +201,14 @@ namespace TeamsHubDesktopClient.Pages
         private async Task InitializeProjectsAsync()
         {
             projectList = await projectManagementRESTProvider.GetAllMyProjectsAsync(StudentSinglenton.ID);
-            ShowMyProjects(projectList);
+            if(projectList != null)
+            {
+                ShowMyProjects(projectList);
+            }
+            else
+            {
+                MessageBox.Show("Lo siento hubo una problema con los servidores, intentelo mas tarde");
+            }
         }
 
         private void Button_ShowForm(object sender, RoutedEventArgs e)
@@ -221,16 +229,22 @@ namespace TeamsHubDesktopClient.Pages
                 ProjectDTO projectDTO = GetProjectInfo();
                 bool result = projectManagementRESTProvider.AddProject(projectDTO, StudentSinglenton.ID);
                 string message;
-                if (result)
+
+                if (projectDTO.StartDate < projectDTO.EndDate)
                 {
-                    message = "Se ha registrado correctamente el proyecto";
-                    MessageBox.Show(message);
-                    NavigationService.Navigate(new Index());
+                    if (result)
+                    {
+                        MessageBox.Show("Se ha registrado correctamente el proyecto");
+                        NavigationService.Navigate(new Index());
+                    }
+                    else
+                    {
+                        MessageBox.Show("Lo siento se ha presentado un problema en el servidor, intentelo nuevamente, mas tarde");
+                    }
                 }
                 else
                 {
-                    message = "Lo siento se ha presentado un problema en el servidor, intentelo nuevamente, mas tarde";
-                    MessageBox.Show(message);
+                    MessageBox.Show("Lo siento pero la fecha de inicio no puede ser mayor a la de cierre");
                 }
             }
             else
@@ -244,23 +258,27 @@ namespace TeamsHubDesktopClient.Pages
             if (AreValidFields())
             {
                 ProjectDTO projectDTO = GetProjectInfo();
-                bool result = await projectManagementRESTProvider.UpdateProjectAsync(projectDTO);
-                string message;
-                if (result)
+
+                if(projectDTO.StartDate < projectDTO.EndDate)
                 {
-                    message = "Se ha modificado correctamente el proyecto";
-                    MessageBox.Show(message);
-                    NavigationService.Navigate(new Index());
+                    bool result = await projectManagementRESTProvider.UpdateProjectAsync(projectDTO);
+                    string message;
+
+                    if (result)
+                    {
+                        MessageBox.Show("Se ha modificado correctamente el proyecto");
+                        NavigationService.Navigate(new Index());
+                    }
+                    else
+                    {
+                        MessageBox.Show("Lo siento se ha presentado un problema en el servidor, intentelo nuevamente, mas tarde");
+                    }
                 }
                 else
                 {
-                    message = "Lo siento se ha presentado un problema en el servidor, intentelo nuevamente, mas tarde";
-                    MessageBox.Show(message);
+                    MessageBox.Show("Lo siento pero la fecha de inicio no puede ser mayor a la de cierre");
                 }
-            }
-            else
-            {
-                MessageBox.Show("Lo siento, verifique que los campos del fomulario no sean nulos, ni que fueran espacios en blancos");
+
             }
         }
 
@@ -274,29 +292,38 @@ namespace TeamsHubDesktopClient.Pages
         
         private bool AreValidFields()
         {
-            bool band = true;
+            bool areValidFields = true;
 
-            if (txtName.Text.Length <= 0)
+            if (txtName.Text.Trim().Length == 0)
             {
-                band = false;
+                areValidFields = false;
             }
 
-            if (cboStatus.SelectedIndex == -1)
+            if(txtID.Text.Trim().Length > 0)
             {
-                band = false;
+                if (cboStatus.SelectedIndex == -1)
+                {
+                    areValidFields = false;
+                }
             }
-
+            
             if (dpStartDate.SelectedDate == null)
             {
-                band = false;
+                areValidFields = false;
             }
 
             if (dpEndDate.SelectedDate == null)
             {
-                band = false;
+                areValidFields = false;
             }
 
-            return band;
+            if (!areValidFields)
+            {
+                MessageBox.Show("Lo siento, verifique que los campos del " +
+                    "fomulario no sean nulos, ni que fueran espacios en blancos");
+            }
+
+            return areValidFields;
         }
 
         private ProjectDTO GetProjectInfo()
@@ -305,18 +332,22 @@ namespace TeamsHubDesktopClient.Pages
             projectDTO.Name = txtName.Text;
             projectDTO.StartDate = dpStartDate.SelectedDate;
             projectDTO.EndDate = dpEndDate.SelectedDate;
-            if(cboStatus.SelectedIndex == 0)
-            {
-                projectDTO.Status = "En proceso";
-            }
-            else
-            {
-                projectDTO.Status = "Finalizado";
-            }
 
             if(txtID.Text.Length != 0)
             {
                 projectDTO.IdProject = int.Parse(txtID.Text);
+                if (cboStatus.SelectedIndex == 0)
+                {
+                    projectDTO.Status = "En proceso";
+                }
+                else
+                {
+                    projectDTO.Status = "Finalizado";
+                }
+            }
+            else
+            {
+                projectDTO.Status = "No iniciado";
             }
 
             return projectDTO;
@@ -328,14 +359,16 @@ namespace TeamsHubDesktopClient.Pages
             CleanFields();
         }
 
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         private void UpdateProject(ProjectDTO projectDTO)
         {
             grdForm.Visibility = Visibility.Visible;
+            btnUpdateProject.Visibility = Visibility.Visible;
+            cboStatus.IsEnabled = true;
+            FillFieldsWithInformation(projectDTO);
+        }
+
+        private void FillFieldsWithInformation(ProjectDTO projectDTO)
+        {
             txtName.Text = projectDTO.Name;
             string dateAux = $"{projectDTO.StartDate:yyyy-MM-dd}";
             txtStartDate.Text = dateAux;
@@ -343,23 +376,22 @@ namespace TeamsHubDesktopClient.Pages
             txtEndDate.Text = dateAux;
             dpStartDate.SelectedDate = projectDTO.StartDate;
             dpEndDate.SelectedDate = projectDTO.EndDate;
-            if(projectDTO.Status == "En proceso")
-            {
-                cboStatus.SelectedIndex = 0;
-            }
-            else
-            {
-                cboStatus.SelectedIndex = 1;
-            }
             txtID.Text = projectDTO.IdProject.ToString();
-            btnUpdateProject.Visibility = Visibility.Visible;
         }
 
         private async Task DeleteProjectAsync(ProjectDTO projectDTO)
         {
-            await projectManagementRESTProvider.RemoveProjectAsync(projectDTO);
-            MessageBox.Show("Se ha eliminado el proyecto en la base de datos");
-            NavigationService.Navigate(new Index());
+            bool result = await projectManagementRESTProvider.RemoveProjectAsync(projectDTO);
+
+            if (result)
+            {
+                MessageBox.Show("Se ha eliminado el proyecto en la base de datos");
+                NavigationService.Navigate(new Index());
+            }
+            else
+            {
+                MessageBox.Show("Lo siento se ha presentado un problema en el servidor, intentelo nuevamente, mas tarde");
+            }
         }
 
         private void InitializeAnimation()

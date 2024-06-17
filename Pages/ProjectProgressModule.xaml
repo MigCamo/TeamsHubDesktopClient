@@ -17,7 +17,7 @@
         <Rectangle HorizontalAlignment="Left" Height="875" Margin="138,20,0,0" Stroke="Black" VerticalAlignment="Top" Fill="#FF212121" Width="1568" RadiusX="30" RadiusY="30"/>
         <Rectangle HorizontalAlignment="Left" Height="77" Margin="186,46,0,0" Stroke="Black" VerticalAlignment="Top" Width="1475" RadiusX="30" RadiusY="30" Fill="#FF332F2F" StrokeThickness="0"/>
         <Label x:Name="lblProyectName" Content="Nombre del proyecto" HorizontalAlignment="Left" Margin="288,63,0,0" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="30" Foreground="White"/>
-        <Image HorizontalAlignment="Left" Height="79" Margin="186,46,0,0" VerticalAlignment="Top" Width="77" Source="..\Resources\Pictures\ICON-BACK.png"/>
+        <Image HorizontalAlignment="Left" Height="79" Margin="186,46,0,0" VerticalAlignment="Top" Width="77" Source="..\Resources\Pictures\ICON-BACK.png" MouseLeftButtonUp="BackToPreviousWindow"/>
         <local:NavigationBar Grid.Column="0" HorizontalAlignment="Left" Margin="0,0,0,0"/>
 
         <wpf:PieChart Margin="288,257,787,131" DataTooltip="{x:Null}" Hoverable="False" DataClick="PieChart_DataClick">

@@ -28,18 +28,30 @@ namespace TeamsHubDesktopClient.Pages
     /// </summary>
     public partial class ActivitiesModule : Page
     {
-        private int _projectID;
         private List<TaskDTO> _tasks;
         private TaskManagementRESTProvider _TaskManagement;
 
         public ActivitiesModule(int projectID)
         {
             InitializeComponent();
-            _projectID = projectID;
-            lblProjectName.Content = ProjectSinglenton.projectDTO.Name;
             _TaskManagement = App.ServiceProvider.GetService<TaskManagementRESTProvider>();
+            LoadTasksModule(projectID);
+        }
+
+        private void LoadTasksModule(int projectID)
+        {
+            lblProjectName.Content = ProjectSinglenton.projectDTO.Name;
             _tasks = _TaskManagement.GetAllTaskByProject(projectID);
-            ShowTask(_tasks);
+
+            if( _tasks != null)
+            {
+                ShowTask(_tasks);
+            }
+            else
+            {
+                MessageBox.Show("Lo siento hubo problemas con el servidor, intentelo mas tarde.",
+                        "Error con el servidor", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         public void UpdateDatePickerFieldStartDate(object sender, SelectionChangedEventArgs e)
@@ -200,6 +212,7 @@ namespace TeamsHubDesktopClient.Pages
             dpStartDate.SelectedDate = task.StartDate;
             dpEndDate.SelectedDate = task.EndDate;
             txtID.Text = task.IdTask.ToString();
+
             switch (task.Status)
             {
                 case "Actividad Pendiente":
@@ -212,44 +225,65 @@ namespace TeamsHubDesktopClient.Pages
                     cboStatus.SelectedIndex = 2;
                     break;
             }
+
             btnDeleteTask.Visibility = Visibility.Visible;
             btnUpdateTask.Visibility = Visibility.Visible;
         }
 
         private void BackToPreviousWindow(object sender, MouseButtonEventArgs e)
         {
-            NavigationService.Navigate(new Index());
+            NavigationService.GoBack(); 
+        }
+
+        private TaskDTO GetTaskData()
+        {
+            TaskDTO taskDTO = new TaskDTO
+            {
+                Name = txtName.Text,
+                Description = txtDescription.Text,
+                StartDate = (DateTime)dpStartDate.SelectedDate,
+                EndDate = (DateTime)dpEndDate.SelectedDate,
+                IdProject = ProjectSinglenton.projectDTO.IdProject
+            };
+
+            switch (cboStatus.SelectedIndex)
+            {
+                case 0:
+                    taskDTO.Status = "Actividad Pendiente";
+                    break;
+                case 1:
+                    taskDTO.Status = "Actividad en proceso";
+                    break;
+                case 2:
+                    taskDTO.Status = "Actividad Finalizada";
+                    break;
+            }
+
+            if(txtID.Text.Length > 0)
+            {
+                taskDTO.IdTask = int.Parse(txtID.Text);
+            }
+
+            return taskDTO;
         }
 
         private async void Button_RegisterTask(object sender, RoutedEventArgs e)
         {
             if (AreValidFields())
             {
-                TaskDTO taskDTO = new TaskDTO
-                {
-                    Name = txtName.Text,
-                    Description = txtDescription.Text,
-                    StartDate = (DateTime)dpStartDate.SelectedDate,
-                    EndDate = (DateTime)dpEndDate.SelectedDate,
-                    IdProject = ProjectSinglenton.projectDTO.IdProject
-                };
+                TaskDTO newTask = GetTaskData();
+                bool result = await _TaskManagement.AddTaskAsync(newTask);
 
-                switch (cboStatus.SelectedIndex)
+                if (result)
                 {
-                    case 0:
-                        taskDTO.Status = "Actividad Pendiente";
-                        break;
-                    case 1:
-                        taskDTO.Status = "Actividad en proceso";
-                        break;
-                    case 2:
-                        taskDTO.Status = "Actividad Finalizada";
-                        break;
+                    MessageBox.Show("La tarea se ha agregado correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                    NavigationService.Navigate(new ActivitiesModule(ProjectSinglenton.projectDTO.IdProject));
                 }
-
-                bool result = await _TaskManagement.AddTaskAsync(taskDTO);
-                MessageBox.Show("La tarea se ha agregado correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
-                NavigationService.Navigate(new ActivitiesModule(_projectID));
+                else
+                {
+                    MessageBox.Show("Lo siento hubo problemas con el servidor, intentelo mas tarde.", 
+                        "Error con el servidor", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 
@@ -257,40 +291,36 @@ namespace TeamsHubDesktopClient.Pages
         {
             if (AreValidFields())
             {
-                TaskDTO taskDTO = new TaskDTO
-                {
-                    IdTask = int.Parse(txtID.Text),
-                    Name = txtName.Text,
-                    Description = txtDescription.Text,
-                    StartDate = (DateTime)dpStartDate.SelectedDate,
-                    EndDate = (DateTime)dpEndDate.SelectedDate,
-                    IdProject = ProjectSinglenton.projectDTO.IdProject
-                };
+                TaskDTO task = GetTaskData();
+                bool result = await _TaskManagement.UpdateTaskAsync(task);
 
-                switch (cboStatus.SelectedIndex)
+                if (result)
                 {
-                    case 0:
-                        taskDTO.Status = "Actividad Pendiente";
-                        break;
-                    case 1:
-                        taskDTO.Status = "Actividad en proceso";
-                        break;
-                    case 2:
-                        taskDTO.Status = "Actividad Finalizada";
-                        break;
+                    MessageBox.Show("La tarea se ha modificado correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                    NavigationService.Navigate(new ActivitiesModule(ProjectSinglenton.projectDTO.IdProject));
                 }
-
-                bool result = await _TaskManagement.UpdateTaskAsync(taskDTO);
-                MessageBox.Show("La tarea se ha agregado correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
-                NavigationService.Navigate(new ActivitiesModule(_projectID));
+                else
+                {
+                    MessageBox.Show("Lo siento hubo problemas con el servidor, intentelo mas tarde.",
+                        "Error con el servidor", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 
         private async void Button_DeleteTask(object sender, RoutedEventArgs e)
         {
             bool result = await _TaskManagement.RemoveTaskAsync(int.Parse(txtID.Text));
-            MessageBox.Show("La tarea se ha agregado correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
-            NavigationService.Navigate(new ActivitiesModule(_projectID));
+            if (result)
+            {
+                MessageBox.Show("La tarea se ha agregado correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                NavigationService.Navigate(new ActivitiesModule(ProjectSinglenton.projectDTO.IdProject));
+            }
+            else
+            {
+                MessageBox.Show("Lo siento hubo problemas con el servidor, intentelo mas tarde.",
+                        "Error con el servidor", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            
         }
 
 
@@ -298,12 +328,12 @@ namespace TeamsHubDesktopClient.Pages
         {
             bool band = true;
 
-            if(txtName.Text.Length == 0)
+            if(txtName.Text.Trim().Length == 0)
             {
                 band = false;
             }
 
-            if (txtDescription.Text.Length == 0)
+            if (txtDescription.Text.Trim().Length == 0)
             {
                 band = false;
             }

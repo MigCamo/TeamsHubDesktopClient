@@ -30,12 +30,14 @@ namespace TeamsHubDesktopClient.Pages
     {
         StudentManagementRESTProvider studentManagement;
         StudentDTO myUser;
+        String password;
 
         public DetailsProfileModule()
         {
             InitializeComponent();
             studentManagement = App.ServiceProvider.GetService<StudentManagementRESTProvider>();
             myUser = studentManagement.GetUserPersonalData(StudentSinglenton.ID);
+            password = myUser.Password;
             InitializeUserData(myUser);
 
         }
@@ -74,32 +76,39 @@ namespace TeamsHubDesktopClient.Pages
         }
 
         private async void Button_EditUser(object sender, RoutedEventArgs e)
-        {
-            List<string> errorMessages = AreUserFieldsValid();
-            if (errorMessages.Count < 1)
+        { 
+            if (AreUserFieldsValid())
             {
-                StudentDTO studentDTO = GetUserInfo();
-                int result = await studentManagement.EditStudent(studentDTO);
-                if (result == (int)ServerResponse.SuccessfulRegistration)
+                if(pwdPasswordConfirm.Password == password)
                 {
-                    CleanFields();
-                    myUser = studentManagement.GetUserPersonalData(StudentSinglenton.ID);
-                    InitializeUserData(myUser);
-                }
-                else if (result == (int)ServerResponse.NotRegistered)
-                {
-                    MessageBox.Show("Usuario no encontrado", "Lo siento, el usuario a modificar no se encuentra", MessageBoxButton.OK, MessageBoxImage.Error);
+                    StudentDTO studentDTO = GetUserInfo();
+                    int result = await studentManagement.EditStudent(studentDTO);
+
+                    if (result == (int)ServerResponse.SuccessfulRegistration)
+                    {
+                        StudentSinglenton.FullName = txtLastName.Text + " " + txtSurName.Text + " " + txtName.Text + " " + txtNickName.Text;
+                        MessageBox.Show("Modificacion de usuario correcta", "Se modifico correctamente la modificacion del usuario",
+                            MessageBoxButton.OK, MessageBoxImage.Information);
+                        MainWindow mainWindow = Window.GetWindow(this) as MainWindow;
+                        Frame framePrincipal = mainWindow.FindName("frameContainer") as Frame;
+                        framePrincipal.Navigate(new Index());
+                    }
+                    else if (result == (int)ServerResponse.NotRegistered)
+                    {
+                        MessageBox.Show("Usuario no encontrado", "Lo siento, el usuario a modificar no se encuentra",
+                            MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Lo siento, hubo un problema con los servidores", "Error en los servidores",
+                            MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Lo siento, hubo un problema con los servidores", "Error en los servidores", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Contraseña incorrecta", "Lo siento pero la contraseña de confirmacion no coincide con la registrada",
+                        MessageBoxButton.OK, MessageBoxImage.Information);
                 }
-            }
-            else
-            {
-                string WrongFields = "'" + string.Join("', '", errorMessages) + "'";
-                MessageBox.Show("Campos invalidos", "Los campos " + WrongFields
-                    + " no deben ser nulos, ni debe tener caracteres especiales");
             }
         }
 
@@ -123,52 +132,68 @@ namespace TeamsHubDesktopClient.Pages
             pwdPasswordRegister.BorderBrush = Brushes.White;
         }
 
-        private List<string> AreUserFieldsValid()
+        private bool AreUserFieldsValid()
         {
+            bool areFieldsValid = true;
+
             List<string> errorMessages = new List<string>();
             if (!RegexChecker.CheckName(txtName.Text))
             {
                 txtName.BorderBrush = Brushes.Red;
                 errorMessages.Add("'Nombres'");
+                areFieldsValid = false;
             }
 
             if (!RegexChecker.CheckLastName(txtLastName.Text))
             {
                 txtLastName.BorderBrush = Brushes.Red;
                 errorMessages.Add("'Apellido Paterno'");
+                areFieldsValid = false;
             }
 
             if (!RegexChecker.CheckSecondLastName(txtSurName.Text))
             {
                 txtSurName.BorderBrush = Brushes.Red;
                 errorMessages.Add("'Apellido Materno'");
+                areFieldsValid = false;
             }
 
             if (!RegexChecker.CheckName(txtNickName.Text))
             {
                 txtNickName.BorderBrush = Brushes.Red;
                 errorMessages.Add("'Apodo'");
+                areFieldsValid = false;
             }
 
             if (!RegexChecker.CheckEmail(txtEmailRegister.Text))
             {
                 txtEmailRegister.BorderBrush = Brushes.Red;
                 errorMessages.Add("'Email'");
+                areFieldsValid = false;
             }
 
             if (string.IsNullOrEmpty(pwdPasswordConfirm.Password))
             {
                 pwdPasswordConfirm.BorderBrush = Brushes.Red;
                 errorMessages.Add("'Confirmacion de contraseña'");
+                areFieldsValid = false;
             }
 
             if (string.IsNullOrEmpty(pwdPasswordRegister.Password))
             {
                 pwdPasswordRegister.BorderBrush = Brushes.Red;
                 errorMessages.Add("'Contraseña'");
+                areFieldsValid = false;
             }
 
-            return errorMessages;
+            if (!areFieldsValid)
+            {
+                string WrongFields = "'" + string.Join("', '", errorMessages) + "'";
+                MessageBox.Show("Campos invalidos", "Los campos " + WrongFields
+                    + " no deben ser nulos, ni debe tener caracteres especiales");
+            }
+
+            return areFieldsValid;
         }
 
     }

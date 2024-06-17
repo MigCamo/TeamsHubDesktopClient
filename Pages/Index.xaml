@@ -14,6 +14,7 @@
     </Page.Background>
 
     <Grid x:Name="Background">
+        <Label Content="Mi espacio de trabajo" HorizontalAlignment="Left" Margin="58,27,0,0" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="48" FontWeight="ExtraBold" Foreground="#FFFCF3F3"/>
         <Button Content="Nuevo Proyecto" HorizontalAlignment="Left" Margin="944,38,0,0" VerticalAlignment="Top" Height="64" Width="265" Background="#FF185D76" Foreground="White" FontFamily="Arial Black" FontSize="22" Click="Button_ShowForm"/>
         <WrapPanel x:Name="wpMyProjects" Margin="151,144,150,42"/>
 
@@ -21,7 +22,6 @@
             <Grid x:Name="grdDynamicButtons" MouseLeftButtonDown="OpenSlidingMenu">
                 <Button x:Name="butProfile" Content="Ver mi Perfil" HorizontalAlignment="Left" Margin="1221,38,0,0" VerticalAlignment="Top" Height="64" Width="484" Background="#FF185D76" Foreground="White" FontFamily="Arial Black" FontSize="22" Click="GoToMyProfile"/>
                 <Button x:Name="butLogOut" Content="Cerrar Sesión" HorizontalAlignment="Left" Margin="1221,38,0,0" VerticalAlignment="Top" Height="64" Width="484" Background="#FF185D76" Foreground="White" FontFamily="Arial Black" FontSize="22" Click="LogOut"/>
-                <Label Content="Mi espacio de trabajo" HorizontalAlignment="Left" Margin="58,27,0,0" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="48" FontWeight="ExtraBold" Foreground="#FFFCF3F3"/>
                 <Rectangle HorizontalAlignment="Left" Height="63" Margin="1221,38,0,0" VerticalAlignment="Top" Width="484"  RadiusY="30" RadiusX="30" StrokeThickness="0" Fill="#FF204C26"/>
                 <Image HorizontalAlignment="Left" Height="61" Margin="1232,38,0,0" VerticalAlignment="Top" Width="60" Source="..\Resources\Pictures\ICON-PROFILE.png"/>
                 <Label x:Name="lblStudentName" Content="MigCamo" HorizontalAlignment="Left" Margin="1292,47,0,0" VerticalAlignment="Top" Height="47" Width="392" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="20" FontWeight="Bold" FontFamily="Arial Black" Foreground="White"/>
@@ -45,7 +45,7 @@
             <Button Content="Cancelar" HorizontalAlignment="Left" Margin="610,746,0,0" VerticalAlignment="Top" Height="57" Width="232" Foreground="White" BorderBrush="Black" Background="Black" FontSize="20" FontWeight="Bold" Click="Button_CloseForm"/>
             <Button Content="Guardar" HorizontalAlignment="Left" Margin="902,746,0,0" VerticalAlignment="Top" Height="58" Width="232" Foreground="White" BorderBrush="Black" Background="Black" FontSize="20" FontWeight="Bold" Click="Button_RegisterProject"/>
             <Label Content="Estado del proyecto" HorizontalAlignment="Left" Margin="586,570,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="30" FontWeight="Bold" Foreground="#FFE6DFDF"/>
-            <ComboBox x:Name="cboStatus" Margin="586,632,586,247" Background="#FF212121" BorderBrush="#FF827E7E" Foreground="Black" FontSize="24" SelectionChanged="ListBox_SelectionChanged">
+            <ComboBox x:Name="cboStatus" Margin="586,632,586,247" Background="#FF212121" BorderBrush="#FF827E7E" Foreground="Black" FontSize="24" IsEnabled="False">
                 <ComboBoxItem>En proceso</ComboBoxItem>
                 <ComboBoxItem>Finalizado</ComboBoxItem>
             </ComboBox>

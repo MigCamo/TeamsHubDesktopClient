@@ -51,7 +51,7 @@
             </Rectangle>
             <Image HorizontalAlignment="Left" Height="26" Margin="693,470,0,0" VerticalAlignment="Top" Width="29" Source="D:\Workspace-C#\TeamsHubDesktopClient\Resources\Pictures\ICON-PASSWORD.png"/>
             <TextBox x:Name="txtPassword" Visibility="Hidden" HorizontalAlignment="Left" Margin="728,465,0,0" TextWrapping="Wrap" Text="" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="267" Height="36" Background="{x:Null}" Foreground="#FFFFF3F3" BorderBrush="{x:Null}" FontFamily="Arial" FontSize="18" TextChanged="TxtPassword_TextChanged"/>
-            <PasswordBox x:Name="pwdPassword" HorizontalAlignment="Left" Margin="728,465,0,0" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="267" Height="36" Background="{x:Null}" Foreground="#FFFFF3F3" BorderBrush="{x:Null}" FontFamily="Arial" FontSize="18" PasswordChanged="PasswordBox_PasswordChanged"/>
+            <PasswordBox x:Name="pwdPassword" HorizontalAlignment="Left" Margin="728,465,0,0" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="267" Height="36" Background="{x:Null}" Foreground="#FFFFF3F3" BorderBrush="{x:Null}" FontFamily="Arial" FontSize="18"/>
             <Border CornerRadius="10" Background="#FF5BA1C5" HorizontalAlignment="Center" Margin="0,570,0,0" VerticalAlignment="Top" Height="43" Width="384">
                 <Button Content="Sign in" Background="Transparent" BorderBrush="Transparent" Click="Button_Login" Foreground="White" FontWeight="Bold" FontSize="18"/>
             </Border>
@@ -115,7 +115,7 @@
             <Image HorizontalAlignment="Left" Height="26" Margin="519,484,0,0" VerticalAlignment="Top" Width="29" Source="D:\Workspace-C#\TeamsHubDesktopClient\Resources\Pictures\ICON-EMAIL.png" RenderTransformOrigin="0.471,0.59"/>
             <TextBox x:Name="txtRecoverPassword" HorizontalAlignment="Left" Margin="557,477,0,0" TextWrapping="Wrap" Text="" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="669" Height="41" Background="{x:Null}" BorderBrush="{x:Null}" FontFamily="Arial" FontSize="18" Foreground="White"/>
             <Button Content="Enviar contraseña" HorizontalAlignment="Left" Margin="892,559,0,0" VerticalAlignment="Top" Width="347" Height="45" Background="#FF3B6281" Foreground="White" FontSize="20" FontWeight="Bold" Click="Button_PasswordRecovery"/>
-            <Button Content="Cancelar" HorizontalAlignment="Left" Margin="503,559,0,0" VerticalAlignment="Top" Width="347" Height="45" Background="#FF3B6281" Foreground="White" FontSize="20" FontWeight="Bold" Click="Button_Click_1"/>
+            <Button Content="Cancelar" HorizontalAlignment="Left" Margin="503,559,0,0" VerticalAlignment="Top" Width="347" Height="45" Background="#FF3B6281" Foreground="White" FontSize="20" FontWeight="Bold" Click="Button_CloseRecoverPasswordForm"/>
         </Grid>
         
     </Grid>
