@@ -106,8 +106,15 @@ namespace TeamsHubDesktopClient.Pages
 
             if(!areFieldsValid)
             {
-                MessageBox.Show("Verifique que el correo y " +
-                    "contraseña no sea nulo ni tenga espacios en blanco");
+                MessageBox.Show("Los campos no debe ser ni blancos ni nulos",
+                    "Campos invalidos", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+
+            if (pwdPassword.Password.Length < 8)
+            {
+                MessageBox.Show("La contraseña debe tener al menos 8 caracteres como minimo",
+                    "Contraseña invalida", MessageBoxButton.OK, MessageBoxImage.Information );
+                areFieldsValid = false;
             }
 
             return areFieldsValid;
@@ -174,36 +181,49 @@ namespace TeamsHubDesktopClient.Pages
                     + " no deben ser nulos, ni debe tener caracteres especiales");
             }
 
+            if (pwdPasswordRegister.Password.Length < 8)
+            {
+                MessageBox.Show("La contraseña debe tener al menos 8 caracteres como minimo",
+                    "Contraseña invalida", MessageBoxButton.OK, MessageBoxImage.Information);
+                areUserFieldsValid = false;
+            }
+
             return areUserFieldsValid;
         }
 
         private void Button_RegisterUser(object sender, RoutedEventArgs e)
         {
+           
             if (AreUserFieldsValid())
             {
-                StudentDTO studentDTO = GetUserInfo();
-                byte[] encodedPassword = new UTF8Encoding().GetBytes(studentDTO.Password);
-                byte[] hash = ((HashAlgorithm)CryptoConfig.CreateFromName("MD5")).ComputeHash(encodedPassword);
-                string passwordMD5 = BitConverter.ToString(hash).Replace("-", string.Empty).ToLower();
-                studentDTO.Password = passwordMD5;
-
-                int result = studentManager.AddStudent(studentDTO);
-                if (result == (int)ServerResponse.SuccessfulRegistration)
+                if(pwdPasswordRegister.Password == pwdPasswordConfirm.Password)
                 {
-                    MessageBox.Show("Se registro correctamente el usuario en el sistema");
-                    grdLogin.Visibility = Visibility.Visible;
-                    grdRegisterForm.Visibility = Visibility.Hidden;
-                    CleanFields();
-                }
-                else if (result == (int)ServerResponse.NotRegistered)
-                {
-                    MessageBox.Show("Usuario ya existente", "Lo siento, el usuario ya esta registrado", MessageBoxButton.OK, MessageBoxImage.Error);
+                    StudentDTO studentDTO = GetUserInfo();
+                    int result = studentManager.AddStudent(studentDTO);
+                    if (result == (int)ServerResponse.SuccessfulRegistration)
+                    {
+                        MessageBox.Show("Se registro correctamente el usuario en el sistema");
+                        grdLogin.Visibility = Visibility.Visible;
+                        grdRegisterForm.Visibility = Visibility.Hidden;
+                        CleanFields();
+                    }
+                    else if (result == (int)ServerResponse.NotRegistered)
+                    {
+                        MessageBox.Show("Lo siento, el usuario ya esta registrado", "Usuario ya existente", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Lo siento, hubo un problema con los servidores", "Error en los servidores", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Lo siento, hubo un problema con los servidores", "Error en los servidores", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Lo siento, pero la contraseña de registro y la contraseña de confirmacion, no coinciden, verifiquelas y intente de nuevo, por favor",
+                        "contraseñas invalidas", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+            
+            
         }
 
         private StudentDTO GetUserInfo()
@@ -272,16 +292,19 @@ namespace TeamsHubDesktopClient.Pages
                 result = userIdentityManager.PasswordRecovery(txtRecoverPassword.Text.Trim());
                 if(result)
                 {
-                    MessageBox.Show("Se envio exitosamente la contraseña asu correo, verifiquelo para que recupere la contraseña");
+                    MessageBox.Show("Se envio exitosamente la contraseña asu correo, verifiquelo para que recupere la contraseña",
+                        "Envio Existoso", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
-                    MessageBox.Show("Lo siento, pero no existe ningun correo que nos proporciono, en la base de datos");
+                    MessageBox.Show("Lo siento, pero no existe ningun correo que nos proporciono, en la base de datos",
+                        "Correo no existente", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Lo siento, pero debe enviar un correo valido");
+                MessageBox.Show("Lo siento, pero debe enviar un correo valido",
+                    "Correo no valido", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 

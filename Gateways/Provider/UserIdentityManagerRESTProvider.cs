@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using TeamsHubDesktopClient.DTOs;
+using TeamsHubDesktopClient.Resources;
 using TeamsHubDesktopClient.SinglentonClasses;
 
 namespace TeamsHubDesktopClient.Gateways.Provider
@@ -24,10 +25,8 @@ namespace TeamsHubDesktopClient.Gateways.Provider
         public async Task<UserValidationResponse> ValidateUserAsync(SessionLoginRequest sessionLoginRequest)
         {
             UserValidationResponse userValidationResponse;
-
             try
             {
-                sessionLoginRequest.password = EncryptPassword(sessionLoginRequest.password);
                 var response = await HttpClientSingleton.Instance.PostAsJsonAsync("/TeamHub/Sessions/validateUser", sessionLoginRequest);
                 response.EnsureSuccessStatusCode();
                 userValidationResponse = await response.Content.ReadFromJsonAsync<UserValidationResponse>();
@@ -58,15 +57,6 @@ namespace TeamsHubDesktopClient.Gateways.Provider
             }
 
             return result;
-        }
-
-        private String EncryptPassword(String password)
-        {
-            byte[] encodedPassword = new UTF8Encoding().GetBytes(password);
-            byte[] hash = ((HashAlgorithm)CryptoConfig.CreateFromName("MD5")).ComputeHash(encodedPassword);
-            string passwordMD5 = BitConverter.ToString(hash).Replace("-", string.Empty).ToLower();
-            
-            return passwordMD5;
         }
     }
 }

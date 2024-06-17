@@ -36,6 +36,14 @@ namespace TeamsHubDesktopClient.Pages
             lblProyectName.Content = ProjectSinglenton.projectDTO.Name;
             _TaskManagement = App.ServiceProvider.GetService<TaskManagementRESTProvider>();
             _tasks = _TaskManagement.GetAllTaskByProject(ProjectSinglenton.projectDTO.IdProject);
+
+            if (_tasks == null)
+            {
+                _tasks = new List<TaskDTO>();
+                MessageBox.Show("Lo siento, hubo un problema con los servidores", "Error en los servidores",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
             InitializeGraph();
             DataContext = this;
         }
@@ -81,29 +89,29 @@ namespace TeamsHubDesktopClient.Pages
             Values3 = new ChartValues<double> { inProgressTasks };
 
             SeriesCollection = new SeriesCollection
-            {
-                new PieSeries
                 {
-                    Title = "Actividades Pendientes",
-                    Values = Values1,
-                    DataLabels = true,
-                    LabelPoint = PointLabel
-                },
-                new PieSeries
-                {
-                    Title = "Actividades en proceso",
-                    Values = Values2,
-                    DataLabels = true,
-                    LabelPoint = PointLabel
-                },
-                new PieSeries
-                {
-                    Title = "Actividades Terminadas",
-                    Values = Values3,
-                    DataLabels = true,
-                    LabelPoint = PointLabel
-                }
-            };
+                    new PieSeries
+                    {
+                        Title = "Actividades Pendientes",
+                        Values = Values1,
+                        DataLabels = true,
+                        LabelPoint = PointLabel
+                    },
+                    new PieSeries
+                    {
+                        Title = "Actividades en proceso",
+                        Values = Values2,
+                        DataLabels = true,
+                        LabelPoint = PointLabel
+                    },
+                    new PieSeries
+                    {
+                        Title = "Actividades Terminadas",
+                        Values = Values3,
+                        DataLabels = true,
+                        LabelPoint = PointLabel
+                    }
+                };
 
             lblPendingTasks.Content = "Actividades Pendientes: " + (totalTasks > 0 ? (pendingTasks * 100 / totalTasks) : 0) + "%";
             lblInProgressTasks.Content = "Actividades En Proceso: " + (totalTasks > 0 ? (inProgressTasks * 100 / totalTasks) : 0) + "%";

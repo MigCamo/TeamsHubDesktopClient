@@ -232,22 +232,26 @@ namespace TeamsHubDesktopClient.Pages
                     bool result = projectManagementRESTProvider.AddProject(projectDTO, StudentSinglenton.ID);
                     if (result)
                     {
-                        MessageBox.Show("Se ha registrado correctamente el proyecto");
+                        MessageBox.Show("Se ha registrado correctamente el proyecto",
+                            "Registro exitoso", MessageBoxButton.OK, MessageBoxImage.Information);
                         NavigationService.Navigate(new Index());
                     }
                     else
                     {
-                        MessageBox.Show("Lo siento se ha presentado un problema en el servidor, intentelo nuevamente, mas tarde");
+                        MessageBox.Show("Lo siento se ha presentado un problema en el servidor, intentelo nuevamente, mas tarde",
+                            "Error con los servidores", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Lo siento pero la fecha de inicio no puede ser mayor a la de cierre");
+                    MessageBox.Show("Lo siento pero la fecha de inicio no puede ser mayor a la de cierre",
+                        "Fechas erroneas", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
             else
             {
-                MessageBox.Show("Lo siento, verifique que los campos del fomulario no sean nulos, ni que fueran espacios en blancos");
+                MessageBox.Show("Lo siento, verifique que los campos del fomulario no sean nulos, ni que fueran espacios en blancos",
+                    "Campos invalidos", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -262,17 +266,20 @@ namespace TeamsHubDesktopClient.Pages
                     bool result = await projectManagementRESTProvider.UpdateProjectAsync(projectDTO);
                     if (result)
                     {
-                        MessageBox.Show("Se ha modificado correctamente el proyecto");
+                        MessageBox.Show("Se ha modificado correctamente el proyecto",
+                            "Modificacion correcta", MessageBoxButton.OK, MessageBoxImage.Information);
                         NavigationService.Navigate(new Index());
                     }
                     else
                     {
-                        MessageBox.Show("Lo siento se ha presentado un problema en el servidor, intentelo nuevamente, mas tarde");
+                        MessageBox.Show("Lo siento se ha presentado un problema en el servidor, intentelo nuevamente, mas tarde",
+                            "Error con los servidores", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Lo siento pero la fecha de inicio no puede ser mayor a la de cierre");
+                    MessageBox.Show("Lo siento pero la fecha de inicio no puede ser mayor a la de cierre",
+                        "Fechas erroneas", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
 
             }
@@ -316,7 +323,8 @@ namespace TeamsHubDesktopClient.Pages
             if (!areValidFields)
             {
                 MessageBox.Show("Lo siento, verifique que los campos del " +
-                    "fomulario no sean nulos, ni que fueran espacios en blancos");
+                    "fomulario no sean nulos, ni que fueran espacios en blancos",
+                    "Campos no validos", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
 
             return areValidFields;
@@ -377,16 +385,27 @@ namespace TeamsHubDesktopClient.Pages
 
         private async Task DeleteProjectAsync(ProjectDTO projectDTO)
         {
-            bool result = await projectManagementRESTProvider.RemoveProjectAsync(projectDTO);
+            MessageBoxResult confirmationResult = MessageBox.Show(
+            "¿Estás seguro de que deseas eliminar este proyecto?",
+            "Confirmación de eliminación",
+            MessageBoxButton.YesNo,
+            MessageBoxImage.Warning);
 
-            if (result)
+            if (confirmationResult == MessageBoxResult.Yes)
             {
-                MessageBox.Show("Se ha eliminado el proyecto en la base de datos");
-                NavigationService.Navigate(new Index());
-            }
-            else
-            {
-                MessageBox.Show("Lo siento se ha presentado un problema en el servidor, intentelo nuevamente, mas tarde");
+                bool result = await projectManagementRESTProvider.RemoveProjectAsync(projectDTO);
+
+                if (result)
+                {
+                    MessageBox.Show("Se ha eliminado el proyecto en la base de datos",
+                        "Eliminación exitosa", MessageBoxButton.OK, MessageBoxImage.Information);
+                    NavigationService.Navigate(new Index());
+                }
+                else
+                {
+                    MessageBox.Show("Lo siento, se ha presentado un problema en el servidor. Inténtelo nuevamente más tarde.",
+                        "Error con los servidores", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 
