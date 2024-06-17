@@ -193,6 +193,7 @@ namespace TeamsHubDesktopClient.Pages
 
         private void Button_RegisterUser(object sender, RoutedEventArgs e)
         {
+           
             if (AreUserFieldsValid())
             {
                 if(pwdPasswordRegister.Password == pwdPasswordConfirm.Password)
@@ -221,6 +222,8 @@ namespace TeamsHubDesktopClient.Pages
                         "contraseñas invalidas", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+            
+            
         }
 
         private StudentDTO GetUserInfo()

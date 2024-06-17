@@ -58,6 +58,10 @@ namespace TeamsHubDesktopClient.Pages
 
         private void InitializeGraph()
         {
+            if (_tasks == null)
+            {
+                return;
+            }
             var totalTasks = _tasks.Count;
             var pendingTasks = _tasks.Count(t => t.Status == "Actividad Pendiente");
             var inProgressTasks = _tasks.Count(t => t.Status == "Actividad en proceso");
