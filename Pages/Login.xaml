@@ -38,7 +38,7 @@
                 </Rectangle.RenderTransform>
             </Rectangle>
             <Image HorizontalAlignment="Left" Height="26" Margin="693,404,0,0" VerticalAlignment="Top" Width="29" Source="..\Resources\Pictures\ICON-EMAIL.png"/>
-            <TextBox x:Name="txtEmail" HorizontalAlignment="Left" Margin="733,399,0,0" TextWrapping="Wrap" Text="" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="322" Height="36" Background="{x:Null}" Foreground="#FFFFF3F3" BorderBrush="{x:Null}" FontFamily="Arial" FontSize="18"/>
+            <TextBox x:Name="txtEmail" MaxLength="50" HorizontalAlignment="Left" Margin="733,399,0,0" TextWrapping="Wrap" Text="" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="322" Height="36" Background="{x:Null}" Foreground="#FFFFF3F3" BorderBrush="{x:Null}" FontFamily="Arial" FontSize="18"/>
             <Rectangle HorizontalAlignment="Center" Height="52" Stroke="#FF0C97C8" StrokeThickness="1" VerticalAlignment="Top" Width="384" RadiusY="15" RadiusX="15" RenderTransformOrigin="0.5,0.5" Margin="0,457,0,0">
                 <Rectangle.RenderTransform>
                     <TransformGroup>
@@ -50,7 +50,7 @@
                 </Rectangle.RenderTransform>
             </Rectangle>
             <Image HorizontalAlignment="Left" Height="26" Margin="693,470,0,0" VerticalAlignment="Top" Width="29" Source="..\Resources\Pictures\ICON-PASSWORD.png"/>
-            <TextBox x:Name="txtPassword" Visibility="Hidden" HorizontalAlignment="Left" Margin="728,465,0,0" TextWrapping="Wrap" Text="" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="267" Height="36" Background="{x:Null}" Foreground="#FFFFF3F3" BorderBrush="{x:Null}" FontFamily="Arial" FontSize="18" TextChanged="TxtPassword_TextChanged"/>
+            <TextBox x:Name="txtPassword" MaxLength="50" Visibility="Hidden" HorizontalAlignment="Left" Margin="728,465,0,0" TextWrapping="Wrap" Text="" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="267" Height="36" Background="{x:Null}" Foreground="#FFFFF3F3" BorderBrush="{x:Null}" FontFamily="Arial" FontSize="18" TextChanged="TxtPassword_TextChanged"/>
             <PasswordBox x:Name="pwdPassword" HorizontalAlignment="Left" Margin="728,465,0,0" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="267" Height="36" Background="{x:Null}" Foreground="#FFFFF3F3" BorderBrush="{x:Null}" FontFamily="Arial" FontSize="18"/>
             <Border CornerRadius="10" Background="#FF5BA1C5" HorizontalAlignment="Center" Margin="0,570,0,0" VerticalAlignment="Top" Height="43" Width="384">
                 <Button Content="Sign in" Background="Transparent" BorderBrush="Transparent" Click="Button_Login" Foreground="White" FontWeight="Bold" FontSize="18"/>
@@ -73,19 +73,19 @@
             </Rectangle>
             <Label Content="Registrar usuario" HorizontalAlignment="Left" Margin="423,249,0,0" VerticalAlignment="Top" Foreground="#FFFAF5F5" FontFamily="Calibri" FontSize="40" FontWeight="Bold"/>
             <Label Content="Nombre(s)*" HorizontalAlignment="Left" Margin="423,340,0,0" VerticalAlignment="Top" Foreground="White" FontSize="18"/>
-            <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="423,386,0,0" TextWrapping="Wrap" Text="" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="265" Height="36" Background="{x:Null}" Foreground="#FFFFF3F3" BorderBrush="#FFADA5A5" FontFamily="Arial" FontSize="18"/>
+            <TextBox x:Name="txtName" MaxLength="15" HorizontalAlignment="Left" Margin="423,386,0,0" TextWrapping="Wrap" Text="" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="265" Height="36" Background="{x:Null}" Foreground="#FFFFF3F3" BorderBrush="#FFADA5A5" FontFamily="Arial" FontSize="18"/>
             <Label Content="Apellido Paterno*" HorizontalAlignment="Left" Margin="739,340,0,0" VerticalAlignment="Top" Foreground="White" FontSize="18"/>
-            <TextBox x:Name="txtLastName" HorizontalAlignment="Center" Margin="0,386,0,0" TextWrapping="Wrap" Text="" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="265" Height="36" Background="{x:Null}" Foreground="#FFFFF3F3" BorderBrush="#FFADA5A5" FontFamily="Arial" FontSize="18"/>
+            <TextBox x:Name="txtLastName" MaxLength="15" HorizontalAlignment="Center" Margin="0,386,0,0" TextWrapping="Wrap" Text="" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="265" Height="36" Background="{x:Null}" Foreground="#FFFFF3F3" BorderBrush="#FFADA5A5" FontFamily="Arial" FontSize="18"/>
             <Label Content="Apellido Materno*" HorizontalAlignment="Left" Margin="1054,340,0,0" VerticalAlignment="Top" Foreground="White" FontSize="18"/>
-            <TextBox x:Name="txtSurName" HorizontalAlignment="Left" Margin="1054,386,0,0" TextWrapping="Wrap" Text="" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="265" Height="36" Background="{x:Null}" Foreground="#FFFFF3F3" BorderBrush="#FFADA5A5" FontFamily="Arial" FontSize="18"/>
+            <TextBox x:Name="txtSurName" MaxLength="15" HorizontalAlignment="Left" Margin="1054,386,0,0" TextWrapping="Wrap" Text="" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="265" Height="36" Background="{x:Null}" Foreground="#FFFFF3F3" BorderBrush="#FFADA5A5" FontFamily="Arial" FontSize="18"/>
             <Label Content="Correo*" HorizontalAlignment="Left" Margin="423,440,0,0" VerticalAlignment="Top" Foreground="White" FontSize="18"/>
-            <TextBox x:Name="txtEmailRegister" HorizontalAlignment="Left" Margin="423,480,0,0" TextWrapping="Wrap" Text="" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="265" Height="36" Background="{x:Null}" Foreground="#FFFFF3F3" BorderBrush="#FFADA5A5" FontFamily="Arial" FontSize="18"/>
+            <TextBox x:Name="txtEmailRegister" MaxLength="50" HorizontalAlignment="Left" Margin="423,480,0,0" TextWrapping="Wrap" Text="" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="265" Height="36" Background="{x:Null}" Foreground="#FFFFF3F3" BorderBrush="#FFADA5A5" FontFamily="Arial" FontSize="18"/>
             <Label Content="Apodo*" HorizontalAlignment="Left" Margin="739,440,0,0" VerticalAlignment="Top" Foreground="White" FontSize="18"/>
-            <TextBox x:Name="txtNickName" HorizontalAlignment="Center" Margin="0,480,0,0" TextWrapping="Wrap" Text="" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="265" Height="36" Background="{x:Null}" Foreground="#FFFFF3F3" BorderBrush="#FFADA5A5" FontFamily="Arial" FontSize="18"/>
+            <TextBox x:Name="txtNickName" MaxLength="15" HorizontalAlignment="Center" Margin="0,480,0,0" TextWrapping="Wrap" Text="" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="265" Height="36" Background="{x:Null}" Foreground="#FFFFF3F3" BorderBrush="#FFADA5A5" FontFamily="Arial" FontSize="18"/>
             <Label Content="Contraseña*" HorizontalAlignment="Left" Margin="1054,440,0,0" VerticalAlignment="Top" Foreground="White" FontSize="18"/>
-            <PasswordBox x:Name="pwdPasswordRegister" HorizontalAlignment="Left" Margin="1054,480,0,0" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="265" Height="36" Background="{x:Null}" Foreground="#FFFFF3F3" BorderBrush="#FFADA5A5" FontFamily="Arial" FontSize="18"/>
+            <PasswordBox x:Name="pwdPasswordRegister" MaxLength="50" HorizontalAlignment="Left" Margin="1054,480,0,0" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="265" Height="36" Background="{x:Null}" Foreground="#FFFFF3F3" BorderBrush="#FFADA5A5" FontFamily="Arial" FontSize="18"/>
             <Label Content="Confirmacion Contraseña*" HorizontalAlignment="Left" Margin="423,545,0,0" VerticalAlignment="Top" Foreground="White" FontSize="18"/>
-            <PasswordBox x:Name="pwdPasswordConfirm" HorizontalAlignment="Left" Margin="423,585,0,0" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="265" Height="36" Background="{x:Null}" Foreground="#FFFFF3F3" BorderBrush="#FFADA5A5" FontFamily="Arial" FontSize="18"/>
+            <PasswordBox x:Name="pwdPasswordConfirm" MaxLength="50" HorizontalAlignment="Left" Margin="423,585,0,0" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="265" Height="36" Background="{x:Null}" Foreground="#FFFFF3F3" BorderBrush="#FFADA5A5" FontFamily="Arial" FontSize="18"/>
             <Button Content="Registrar" HorizontalAlignment="Left" Margin="1072,585,0,0" VerticalAlignment="Top" Height="52" Width="218" FontSize="20" Foreground="White" Background="#FF1E88B5" BorderBrush="#FF1E88B5" FontWeight="Bold" Click="Button_RegisterUser"/>
             <Button Content="Cancelar" HorizontalAlignment="Left" Margin="828,585,0,0" VerticalAlignment="Top" Height="52" Width="218" Background="#FF1E88B5" BorderBrush="#FF1E88B5" Foreground="#FFFBF5F5" FontSize="20" FontWeight="Bold" Click="Button_CloseForm"/>
 
@@ -113,7 +113,7 @@
                 </Rectangle.RenderTransform>
             </Rectangle>
             <Image HorizontalAlignment="Left" Height="26" Margin="519,484,0,0" VerticalAlignment="Top" Width="29" Source="..\Resources\Pictures\ICON-EMAIL.png" RenderTransformOrigin="0.471,0.59"/>
-            <TextBox x:Name="txtRecoverPassword" HorizontalAlignment="Left" Margin="557,477,0,0" TextWrapping="Wrap" Text="" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="669" Height="41" Background="{x:Null}" BorderBrush="{x:Null}" FontFamily="Arial" FontSize="18" Foreground="White"/>
+            <TextBox x:Name="txtRecoverPassword" MaxLength="50" HorizontalAlignment="Left" Margin="557,477,0,0" TextWrapping="Wrap" Text="" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="669" Height="41" Background="{x:Null}" BorderBrush="{x:Null}" FontFamily="Arial" FontSize="18" Foreground="White"/>
             <Button Content="Enviar contraseña" HorizontalAlignment="Left" Margin="892,559,0,0" VerticalAlignment="Top" Width="347" Height="45" Background="#FF3B6281" Foreground="White" FontSize="20" FontWeight="Bold" Click="Button_PasswordRecovery"/>
             <Button Content="Cancelar" HorizontalAlignment="Left" Margin="503,559,0,0" VerticalAlignment="Top" Width="347" Height="45" Background="#FF3B6281" Foreground="White" FontSize="20" FontWeight="Bold" Click="Button_CloseRecoverPasswordForm"/>
         </Grid>

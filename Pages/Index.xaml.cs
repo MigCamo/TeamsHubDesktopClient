@@ -227,11 +227,9 @@ namespace TeamsHubDesktopClient.Pages
             if (AreValidFields())
             {
                 ProjectDTO projectDTO = GetProjectInfo();
-                bool result = projectManagementRESTProvider.AddProject(projectDTO, StudentSinglenton.ID);
-                string message;
-
                 if (projectDTO.StartDate < projectDTO.EndDate)
                 {
+                    bool result = projectManagementRESTProvider.AddProject(projectDTO, StudentSinglenton.ID);
                     if (result)
                     {
                         MessageBox.Show("Se ha registrado correctamente el proyecto");
@@ -262,8 +260,6 @@ namespace TeamsHubDesktopClient.Pages
                 if(projectDTO.StartDate < projectDTO.EndDate)
                 {
                     bool result = await projectManagementRESTProvider.UpdateProjectAsync(projectDTO);
-                    string message;
-
                     if (result)
                     {
                         MessageBox.Show("Se ha modificado correctamente el proyecto");
