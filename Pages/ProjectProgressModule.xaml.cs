@@ -62,11 +62,11 @@ namespace TeamsHubDesktopClient.Pages
                 switch (chartPoint.SeriesView.Title)
                 {
                     case "Actividades Pendientes":
-                        return string.Format("Actividades Pendientes ({0:P})", chartPoint.Participation);
+                        return string.Format("", chartPoint.Participation);
                     case "Actividades en proceso":
-                        return string.Format("Actividades en proceso ({0:P})", chartPoint.Participation);
+                        return string.Format("", chartPoint.Participation);
                     case "Actividades Terminadas":
-                        return string.Format("Actividades Finalizadas ({0:P})", chartPoint.Participation);
+                        return string.Format("", chartPoint.Participation);
                     default:
                         return string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
                 }
@@ -112,6 +112,11 @@ namespace TeamsHubDesktopClient.Pages
 
             var selectedSeries = (PieSeries)chartPoint.SeriesView;
             selectedSeries.PushOut = 8;
+        }
+
+        private void BackToPreviousWindow(object sender, MouseButtonEventArgs e)
+        {
+            NavigationService.GoBack();
         }
     }
 }

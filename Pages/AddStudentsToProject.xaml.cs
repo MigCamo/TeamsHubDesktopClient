@@ -51,6 +51,11 @@ namespace TeamsHubDesktopClient.Pages
             ShowStudents(users);
         }
 
+        private void BackToPreviousWindow(object sender, MouseButtonEventArgs e)
+        {
+            NavigationService.GoBack();
+        }
+
         private void ShowTask(List<TaskDTO> taskList)
         {
             wpTask.Children.Clear();

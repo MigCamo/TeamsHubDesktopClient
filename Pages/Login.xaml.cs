@@ -92,24 +92,16 @@ namespace TeamsHubDesktopClient.Pages
             lblViewPassword.Visibility = Visibility.Visible;
         }
 
-        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            txtPassword.Text = pwdPassword.Password;
-        }
-
         private void TxtPassword_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (string.IsNullOrEmpty(txtPassword.Text))
-            {
-                pwdPassword.Password = txtPassword.Text;
-            }
+            pwdPassword.Password = txtPassword.Text;
         }
 
         private bool AreLoginFieldsValid()
         {
             bool areFieldsValid = true;
 
-            if(string.IsNullOrEmpty(txtPassword.Text)) areFieldsValid = false;
+            if(string.IsNullOrEmpty(pwdPassword.Password)) areFieldsValid = false;
             if(string.IsNullOrEmpty(txtEmail.Text)) areFieldsValid = false;
 
             if(!areFieldsValid)
@@ -270,7 +262,7 @@ namespace TeamsHubDesktopClient.Pages
         private void Button_PasswordRecovery(object sender, RoutedEventArgs e)
         {
             bool result;
-            if(!RegexChecker.CheckEmail(txtRecoverPassword.Text.Trim()))
+            if(RegexChecker.CheckEmail(txtRecoverPassword.Text.Trim()))
             {
                 result = userIdentityManager.PasswordRecovery(txtRecoverPassword.Text.Trim());
                 if(result)
@@ -288,7 +280,7 @@ namespace TeamsHubDesktopClient.Pages
             }
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Button_CloseRecoverPasswordForm(object sender, RoutedEventArgs e)
         {
             grdRecoverPasswordForm.Visibility = Visibility.Hidden;
             grdLogin.Visibility = Visibility.Visible;
