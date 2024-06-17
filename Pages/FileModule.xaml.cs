@@ -22,6 +22,7 @@ using TeamsHubDesktopClient.Gateways.Provider;
 using System.Windows.Media.Effects;
 using Environment = System.Environment;
 using Microsoft.Extensions.DependencyInjection;
+using TeamsHubDesktopClient.DTOs;
 
 namespace TeamsHubDesktopClient.Pages
 {
@@ -73,25 +74,37 @@ namespace TeamsHubDesktopClient.Pages
 
         private async Task SendFIleBygRPC(byte[] fileContent, string fileName, string extension)
         {
-            var channelOptions = new GrpcChannelOptions
+            try
             {
-                Credentials = ChannelCredentials.Insecure
-            };
+                var channelOptions = new GrpcChannelOptions
+                {
+                    Credentials = ChannelCredentials.Insecure
+                };
 
-            using var channel = GrpcChannel.ForAddress("http://localhost:5001", channelOptions);
-            client = new FileManagement.FileManagementClient(channel);
-            var reply = await client.SaveFileAsync(new FileRequest
+                using var channel = GrpcChannel.ForAddress("http://localhost:5001", channelOptions);
+                client = new FileManagement.FileManagementClient(channel);
+                var reply = await client.SaveFileAsync(new FileRequest
+                {
+                    ProjectName = ProjectSinglenton.projectDTO.IdProject,
+                    FileName = fileName,
+                    Extension = extension,
+                    FileString = Google.Protobuf.ByteString.CopyFrom(fileContent)
+                });
+                MessageBox.Show("Se ha registrado el archivos correctamente", "Exito", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                NavigationService.Navigate(new FileModule());
+            }
+            catch (RpcException ex)
             {
-                ProjectName = ProjectSinglenton.projectDTO.IdProject,
-                FileName = fileName,
-                Extension = extension,
-                FileString = Google.Protobuf.ByteString.CopyFrom(fileContent)
-            });
+                MessageBox.Show("Error al subir el archivo", "Error al subir el archivo", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
         }
 
         private async Task LoadFilesVisual()
         {
-            var fileList = await FileManagementRESTProvider.GetAllFileByProjectAsync(ProjectSinglenton.projectDTO.IdProject);
+            List<DocumentDTO> fileList = null;
+
+            fileList = await FileManagementRESTProvider.GetAllFileByProjectAsync(ProjectSinglenton.projectDTO.IdProject);
 
             if (fileList != null)
             {
@@ -176,15 +189,22 @@ namespace TeamsHubDesktopClient.Pages
 
                     btnDelete.Click += async (sender, e) =>
                     {
-                        var channelOptions = new GrpcChannelOptions
+                        try
                         {
-                            Credentials = ChannelCredentials.Insecure
-                        };
-                        using var channel = GrpcChannel.ForAddress("http://localhost:5001", channelOptions);
-                        client = new FileManagement.FileManagementClient(channel);
-                        var reply = await client.DeleteFileAsync(new DeleteRequest { IdFile = file.IdDocument });
-                        MessageBox.Show("Se eliminará el archivo: " + file.Name);
-                        _ = LoadFilesVisual();
+                            var channelOptions = new GrpcChannelOptions
+                            {
+                                Credentials = ChannelCredentials.Insecure
+                            };
+                            using var channel = GrpcChannel.ForAddress("http://localhost:5001", channelOptions);
+                            client = new FileManagement.FileManagementClient(channel);
+                            var reply = await client.DeleteFileAsync(new DeleteRequest { IdFile = file.IdDocument });
+                            MessageBox.Show("Se eliminará el archivo: " + file.Name);
+                            _ = LoadFilesVisual();
+                        }
+                        catch (RpcException ex)
+                        {
+                            MessageBox.Show("Error al borrar el archivo", "Error al borrar el archivo", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                     };
 
                     Button btnDownload = new Button
@@ -217,12 +237,12 @@ namespace TeamsHubDesktopClient.Pages
                             }
                             else
                             {
-                                MessageBox.Show("El archivo está vacío o no se pudo descargar correctamente.");
+                                MessageBox.Show("El archivo está vacío o no se pudo descargar correctamente.", "Error al descargar archivo", MessageBoxButton.OK, MessageBoxImage.Warning);
                             }
                         }
-                        catch (RpcException ex) when (ex.StatusCode == StatusCode.NotFound)
+                        catch (RpcException ex)
                         {
-                            MessageBox.Show("Archivo no encontrado: " + ex.Message);
+                            MessageBox.Show("El archivo no se ha encontrado", "Error al descargar archivo", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     };
 
@@ -236,6 +256,10 @@ namespace TeamsHubDesktopClient.Pages
 
                 scrollViewer.Content = stackPanelContainer;               
                 wpProjectFiles.Children.Add(scrollViewer);
+            }
+            else
+            {
+                MessageBox.Show("Error al concetarse al servidor, intente nuevamente mas tarde", "Error de conexion", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

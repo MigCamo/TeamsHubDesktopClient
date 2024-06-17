@@ -62,69 +62,75 @@ namespace TeamsHubDesktopClient.Pages
             };
 
             StackPanel stackPanelContainer = new StackPanel();
-
-            foreach (var task in taskList)
+            if(taskList != null)
             {
-                Grid grdContainer = new Grid
+                foreach (var task in taskList)
                 {
-                    Margin = new Thickness(0, 0, 0, 10),
-                };
+                    Grid grdContainer = new Grid
+                    {
+                        Margin = new Thickness(0, 0, 0, 10),
+                    };
 
-                Rectangle rectBackground = new Rectangle
-                {
-                    Height = 65,
-                    Width = 650,
-                    RadiusX = 15,
-                    RadiusY = 15,
-                    Fill = new SolidColorBrush(Color.FromRgb(51, 47, 47)),
-                    Margin = new Thickness(0, 0, 0, 0),
-                };
+                    Rectangle rectBackground = new Rectangle
+                    {
+                        Height = 65,
+                        Width = 650,
+                        RadiusX = 15,
+                        RadiusY = 15,
+                        Fill = new SolidColorBrush(Color.FromRgb(51, 47, 47)),
+                        Margin = new Thickness(0, 0, 0, 0),
+                    };
 
-                DropShadowEffect dropShadowEffect = new DropShadowEffect
-                {
-                    Color = Colors.Black,
-                    Direction = 315,
-                    ShadowDepth = 5,
-                    Opacity = 0.5,
-                };
+                    DropShadowEffect dropShadowEffect = new DropShadowEffect
+                    {
+                        Color = Colors.Black,
+                        Direction = 315,
+                        ShadowDepth = 5,
+                        Opacity = 0.5,
+                    };
 
-                rectBackground.Effect = dropShadowEffect;
-                grdContainer.Children.Add(rectBackground);
+                    rectBackground.Effect = dropShadowEffect;
+                    grdContainer.Children.Add(rectBackground);
 
-                Image imgAddProductIcon = new Image
-                {
-                    Height = 50,
-                    Width = 50,
-                    Source = new BitmapImage(new Uri("..\\Resources\\Pictures\\ICON-TASK.png", UriKind.RelativeOrAbsolute)),
-                    Stretch = Stretch.Fill,
-                    Margin = new Thickness(-565, 0, 0, 0),
-                };
-                grdContainer.Children.Add(imgAddProductIcon);
+                    Image imgAddProductIcon = new Image
+                    {
+                        Height = 50,
+                        Width = 50,
+                        Source = new BitmapImage(new Uri("..\\Resources\\Pictures\\ICON-TASK.png", UriKind.RelativeOrAbsolute)),
+                        Stretch = Stretch.Fill,
+                        Margin = new Thickness(-565, 0, 0, 0),
+                    };
+                    grdContainer.Children.Add(imgAddProductIcon);
 
-                Label lblNameCustomerOrder = new Label
-                {
-                    Content = task.Name,
-                    Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255)),
-                    FontWeight = FontWeights.Black,
-                    FontSize = 18,
-                    Margin = new Thickness(70, 0, 0, 0),
-                };
-                grdContainer.Children.Add(lblNameCustomerOrder);
+                    Label lblNameCustomerOrder = new Label
+                    {
+                        Content = task.Name,
+                        Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255)),
+                        FontWeight = FontWeights.Black,
+                        FontSize = 18,
+                        Margin = new Thickness(70, 0, 0, 0),
+                    };
+                    grdContainer.Children.Add(lblNameCustomerOrder);
 
-                Label lblOrderCostCustomer = new Label
-                {
-                    Content = task.Description,
-                    Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255)),
-                    FontWeight = FontWeights.SemiBold,
-                    FontSize = 18,
-                    Margin = new Thickness(70, 25, 0, 0),
-                };
-                grdContainer.Children.Add(lblOrderCostCustomer);
-                stackPanelContainer.Children.Add(grdContainer);
+                    Label lblOrderCostCustomer = new Label
+                    {
+                        Content = task.Description,
+                        Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255)),
+                        FontWeight = FontWeights.SemiBold,
+                        FontSize = 18,
+                        Margin = new Thickness(70, 25, 0, 0),
+                    };
+                    grdContainer.Children.Add(lblOrderCostCustomer);
+                    stackPanelContainer.Children.Add(grdContainer);
+                }
+
+                scrollViewer.Content = stackPanelContainer;
+                wpTask.Children.Add(scrollViewer);
             }
-
-            scrollViewer.Content = stackPanelContainer;
-            wpTask.Children.Add(scrollViewer);
+            else
+            {
+                MessageBox.Show("ha ocurrido un problema con los servidores", "Error en los servidores", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void ShowStudents(List<User> studentList)
@@ -138,69 +144,76 @@ namespace TeamsHubDesktopClient.Pages
             };
 
             StackPanel stackPanelContainer = new StackPanel();
-
-            foreach (var student in studentList)
+            if (studentList != null)
             {
-                Grid grdContainer = new Grid
+                foreach (var student in studentList)
                 {
-                    Margin = new Thickness(0, 0, 0, 10),
-                };
+                    Grid grdContainer = new Grid
+                    {
+                        Margin = new Thickness(0, 0, 0, 10),
+                    };
 
-                Rectangle rectBackground = new Rectangle
-                {
-                    Height = 65,
-                    Width = 650,
-                    RadiusX = 15,
-                    RadiusY = 15,
-                    Fill = new SolidColorBrush(Color.FromRgb(51, 47, 47)),
-                    Margin = new Thickness(0, 0, 0, 0),
-                };
+                    Rectangle rectBackground = new Rectangle
+                    {
+                        Height = 65,
+                        Width = 650,
+                        RadiusX = 15,
+                        RadiusY = 15,
+                        Fill = new SolidColorBrush(Color.FromRgb(51, 47, 47)),
+                        Margin = new Thickness(0, 0, 0, 0),
+                    };
 
-                DropShadowEffect dropShadowEffect = new DropShadowEffect
-                {
-                    Color = Colors.Black,
-                    Direction = 315,
-                    ShadowDepth = 5,
-                    Opacity = 0.5,
-                };
+                    DropShadowEffect dropShadowEffect = new DropShadowEffect
+                    {
+                        Color = Colors.Black,
+                        Direction = 315,
+                        ShadowDepth = 5,
+                        Opacity = 0.5,
+                    };
 
-                rectBackground.Effect = dropShadowEffect;
-                grdContainer.Children.Add(rectBackground);
+                    rectBackground.Effect = dropShadowEffect;
+                    grdContainer.Children.Add(rectBackground);
 
-                Image imgAddProductIcon = new Image
-                {
-                    Height = 50,
-                    Width = 50,
-                    Source = new BitmapImage(new Uri("..\\Resources\\Pictures\\ICON-PROFILE.png", UriKind.RelativeOrAbsolute)),
-                    Stretch = Stretch.Fill,
-                    Margin = new Thickness(-565, 0, 0, 0),
-                };
-                grdContainer.Children.Add(imgAddProductIcon);
+                    Image imgAddProductIcon = new Image
+                    {
+                        Height = 50,
+                        Width = 50,
+                        Source = new BitmapImage(new Uri("..\\Resources\\Pictures\\ICON-PROFILE.png", UriKind.RelativeOrAbsolute)),
+                        Stretch = Stretch.Fill,
+                        Margin = new Thickness(-565, 0, 0, 0),
+                    };
+                    grdContainer.Children.Add(imgAddProductIcon);
 
-                Label lblNameCustomerOrder = new Label
-                {
-                    Content = student.FullName,
-                    Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255)),
-                    FontWeight = FontWeights.Black,
-                    FontSize = 18,
-                    Margin = new Thickness(70, 0, 0, 0),
-                };
-                grdContainer.Children.Add(lblNameCustomerOrder);
+                    Label lblNameCustomerOrder = new Label
+                    {
+                        Content = student.FullName,
+                        Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255)),
+                        FontWeight = FontWeights.Black,
+                        FontSize = 18,
+                        Margin = new Thickness(70, 0, 0, 0),
+                    };
+                    grdContainer.Children.Add(lblNameCustomerOrder);
 
-                Label lblOrderCostCustomer = new Label
-                {
-                    Content = student.Email,
-                    Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255)),
-                    FontWeight = FontWeights.SemiBold,
-                    FontSize = 18,
-                    Margin = new Thickness(70, 25, 0, 0),
-                };
-                grdContainer.Children.Add(lblOrderCostCustomer);
-                stackPanelContainer.Children.Add(grdContainer);
+                    Label lblOrderCostCustomer = new Label
+                    {
+                        Content = student.Email,
+                        Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255)),
+                        FontWeight = FontWeights.SemiBold,
+                        FontSize = 18,
+                        Margin = new Thickness(70, 25, 0, 0),
+                    };
+                    grdContainer.Children.Add(lblOrderCostCustomer);
+                    stackPanelContainer.Children.Add(grdContainer);
+                }
+
+                scrollViewer.Content = stackPanelContainer;
+                wpTeam.Children.Add(scrollViewer);
             }
-
-            scrollViewer.Content = stackPanelContainer;
-            wpTeam.Children.Add(scrollViewer);
+            else
+            {
+                MessageBox.Show("ha ocurrido un problema con los servidores", "Error en los servidores", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            
         }
 
         private void Button_RegisterUser(object sender, RoutedEventArgs e)

@@ -14,7 +14,7 @@
     </Page.Background>
 
     <Grid>
-        <Image HorizontalAlignment="Left" Height="128" Margin="679,76,0,0" VerticalAlignment="Top" Width="397" Source="D:\Workspace-C#\TeamsHubDesktopClient\Resources\Pictures\Team_Hub-removebg-preview.png"/>
+        <Image HorizontalAlignment="Left" Height="128" Margin="679,76,0,0" VerticalAlignment="Top" Width="397" Source="..\Resources\Pictures\Team_Hub-removebg-preview.png"/>
 
         <Grid x:Name="grdLogin" Visibility="Visible">
             <Rectangle HorizontalAlignment="Center" Height="438" Stroke="Black" VerticalAlignment="Top" Width="515" Fill="#FF212121" RadiusX="30" RadiusY="30" Opacity="0.6" Margin="0,231,0,0">
@@ -37,7 +37,7 @@
                     </TransformGroup>
                 </Rectangle.RenderTransform>
             </Rectangle>
-            <Image HorizontalAlignment="Left" Height="26" Margin="693,404,0,0" VerticalAlignment="Top" Width="29" Source="D:\Workspace-C#\TeamsHubDesktopClient\Resources\Pictures\ICON-EMAIL.png"/>
+            <Image HorizontalAlignment="Left" Height="26" Margin="693,404,0,0" VerticalAlignment="Top" Width="29" Source="..\Resources\Pictures\ICON-EMAIL.png"/>
             <TextBox x:Name="txtEmail" HorizontalAlignment="Left" Margin="733,399,0,0" TextWrapping="Wrap" Text="" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="322" Height="36" Background="{x:Null}" Foreground="#FFFFF3F3" BorderBrush="{x:Null}" FontFamily="Arial" FontSize="18"/>
             <Rectangle HorizontalAlignment="Center" Height="52" Stroke="#FF0C97C8" StrokeThickness="1" VerticalAlignment="Top" Width="384" RadiusY="15" RadiusX="15" RenderTransformOrigin="0.5,0.5" Margin="0,457,0,0">
                 <Rectangle.RenderTransform>
@@ -49,7 +49,7 @@
                     </TransformGroup>
                 </Rectangle.RenderTransform>
             </Rectangle>
-            <Image HorizontalAlignment="Left" Height="26" Margin="693,470,0,0" VerticalAlignment="Top" Width="29" Source="D:\Workspace-C#\TeamsHubDesktopClient\Resources\Pictures\ICON-PASSWORD.png"/>
+            <Image HorizontalAlignment="Left" Height="26" Margin="693,470,0,0" VerticalAlignment="Top" Width="29" Source="..\Resources\Pictures\ICON-PASSWORD.png"/>
             <TextBox x:Name="txtPassword" Visibility="Hidden" HorizontalAlignment="Left" Margin="728,465,0,0" TextWrapping="Wrap" Text="" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="267" Height="36" Background="{x:Null}" Foreground="#FFFFF3F3" BorderBrush="{x:Null}" FontFamily="Arial" FontSize="18" TextChanged="TxtPassword_TextChanged"/>
             <PasswordBox x:Name="pwdPassword" HorizontalAlignment="Left" Margin="728,465,0,0" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="267" Height="36" Background="{x:Null}" Foreground="#FFFFF3F3" BorderBrush="{x:Null}" FontFamily="Arial" FontSize="18" PasswordChanged="PasswordBox_PasswordChanged"/>
             <Border CornerRadius="10" Background="#FF5BA1C5" HorizontalAlignment="Center" Margin="0,570,0,0" VerticalAlignment="Top" Height="43" Width="384">
@@ -112,7 +112,7 @@
                     </TransformGroup>
                 </Rectangle.RenderTransform>
             </Rectangle>
-            <Image HorizontalAlignment="Left" Height="26" Margin="519,484,0,0" VerticalAlignment="Top" Width="29" Source="D:\Workspace-C#\TeamsHubDesktopClient\Resources\Pictures\ICON-EMAIL.png" RenderTransformOrigin="0.471,0.59"/>
+            <Image HorizontalAlignment="Left" Height="26" Margin="519,484,0,0" VerticalAlignment="Top" Width="29" Source="..\Resources\Pictures\ICON-EMAIL.png" RenderTransformOrigin="0.471,0.59"/>
             <TextBox x:Name="txtRecoverPassword" HorizontalAlignment="Left" Margin="557,477,0,0" TextWrapping="Wrap" Text="" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="669" Height="41" Background="{x:Null}" BorderBrush="{x:Null}" FontFamily="Arial" FontSize="18" Foreground="White"/>
             <Button Content="Enviar contraseña" HorizontalAlignment="Left" Margin="892,559,0,0" VerticalAlignment="Top" Width="347" Height="45" Background="#FF3B6281" Foreground="White" FontSize="20" FontWeight="Bold" Click="Button_PasswordRecovery"/>
             <Button Content="Cancelar" HorizontalAlignment="Left" Margin="503,559,0,0" VerticalAlignment="Top" Width="347" Height="45" Background="#FF3B6281" Foreground="White" FontSize="20" FontWeight="Bold" Click="Button_Click_1"/>
