@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FilePackage;
+using Grpc.Core;
+using Grpc.Net.Client;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -127,6 +130,7 @@ namespace TeamsHubDesktopClient.Pages
                     };
                     grdContainer.Children.Add(lblOrderCostCustomer);
                     stackPanelContainer.Children.Add(grdContainer);
+                    ;
                 }
 
                 scrollViewer.Content = stackPanelContainer;
@@ -208,6 +212,45 @@ namespace TeamsHubDesktopClient.Pages
                         Margin = new Thickness(70, 25, 0, 0),
                     };
                     grdContainer.Children.Add(lblOrderCostCustomer);
+
+                    Style buttonStyle = new Style(typeof(Button));
+                    buttonStyle.Setters.Add(new Setter(Control.BorderThicknessProperty, new Thickness(1)));
+                    buttonStyle.Setters.Add(new Setter(Control.BorderBrushProperty, new SolidColorBrush(Colors.Black)));
+                    buttonStyle.Setters.Add(new Setter(Control.PaddingProperty, new Thickness(10)));
+
+                    Button btnDelete = new Button
+                    {
+                        Content = "Eliminar",
+                        Margin = new Thickness(500, 0, 5, 0),
+                        Background = new SolidColorBrush(Color.FromRgb(255, 69, 58)),
+                        Foreground = new SolidColorBrush(Colors.White),
+                        FontWeight = FontWeights.Bold,
+                        Width = 100,
+                        Height = 40,
+                    };
+
+                    btnDelete.Click += async (sender, e) =>
+                    {
+                        try
+                        {
+                            _StudentManager.DeleteStudentToProject(student.ID, ProjectSinglenton.projectDTO.IdProject);
+                            MessageBox.Show("Se ha eliminado al usuario correctamente", "Usuario Eliminado Correctamente", MessageBoxButton.OK, MessageBoxImage.Information);
+                            NavigationService.Navigate(new AddStudentsToProject());                            
+                        }
+                        catch (RpcException ex)
+                        {
+                            MessageBox.Show("Error al borrar el archivo", "Error al borrar el archivo", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    };
+
+                    grdContainer.Children.Add(btnDelete);
+
+                    if (student.ID == StudentSinglenton.ID)
+                    {
+                        btnDelete.IsEnabled = false;
+                        btnDelete.Background = new SolidColorBrush(Color.FromRgb(128, 128, 128));
+                    }
+
                     stackPanelContainer.Children.Add(grdContainer);
                 }
 
@@ -248,6 +291,4 @@ namespace TeamsHubDesktopClient.Pages
             }
         }
     }
-
-
 }
