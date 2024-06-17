@@ -73,8 +73,8 @@ namespace TeamsHubDesktopClient.Pages
             };
 
             Values1 = new ChartValues<double> { pendingTasks };
-            Values2 = new ChartValues<double> { inProgressTasks };
-            Values3 = new ChartValues<double> { finishedTasks };
+            Values2 = new ChartValues<double> { finishedTasks };
+            Values3 = new ChartValues<double> { inProgressTasks };
 
             SeriesCollection = new SeriesCollection
             {
@@ -100,6 +100,10 @@ namespace TeamsHubDesktopClient.Pages
                     LabelPoint = PointLabel
                 }
             };
+
+            lblPendingTasks.Content = "Actividades Pendientes: " + (totalTasks > 0 ? (pendingTasks * 100 / totalTasks) : 0) + "%";
+            lblInProgressTasks.Content = "Actividades En Proceso: " + (totalTasks > 0 ? (inProgressTasks * 100 / totalTasks) : 0) + "%";
+            lblFinishedTasks.Content = "Actividades Terminadas: " + (totalTasks > 0 ? (finishedTasks * 100 / totalTasks) : 0) + "%";
         }
 
         private void PieChart_DataClick(object sender, LiveCharts.ChartPoint chartPoint)

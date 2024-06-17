@@ -28,12 +28,12 @@
             </wpf:PieChart.Series>
         </wpf:PieChart>
         <Label Content="Representacion del avance proyecto" HorizontalAlignment="Left" Margin="313,174,0,0" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="30" Foreground="White"/>
-        <Rectangle HorizontalAlignment="Left" Height="49" Margin="1075,423,0,0" Stroke="#FF325BD8" VerticalAlignment="Top" Width="49" Fill="#FF325BD8"/>
-        <Rectangle HorizontalAlignment="Left" Height="49" Margin="1075,525,0,0" Stroke="#FFFEC007" VerticalAlignment="Top" Width="49" Fill="#FFFEC007"/>
-        <Rectangle HorizontalAlignment="Left" Height="49" Margin="1075,627,0,0" Stroke="#FFF34336" VerticalAlignment="Top" Width="49" Fill="#FFF34336"/>
-        <Label Content="Actividades Pendientes" HorizontalAlignment="Left" Margin="1137,426,0,0" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="30" Foreground="White"/>
-        <Label Content="Actividades En Proceso" HorizontalAlignment="Left" Margin="1137,527,0,0" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="30" Foreground="White"/>
-        <Label Content="Actividades Terminadas" HorizontalAlignment="Left" Margin="1137,627,0,0" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="30" Foreground="White"/>
+        <Rectangle HorizontalAlignment="Left" Height="49" Margin="1022,423,0,0" Stroke="#FF325BD8" VerticalAlignment="Top" Width="49" Fill="#FF325BD8"/>
+        <Rectangle HorizontalAlignment="Left" Height="49" Margin="1022,525,0,0" Stroke="#FFFEC007" VerticalAlignment="Top" Width="49" Fill="#FFFEC007"/>
+        <Rectangle HorizontalAlignment="Left" Height="49" Margin="1022,627,0,0" Stroke="#FFF34336" VerticalAlignment="Top" Width="49" Fill="#FFF34336"/>
+        <Label x:Name="lblPendingTasks" Content="Actividades Pendientes" HorizontalAlignment="Left" Margin="1084,426,0,0" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="30" Foreground="White"/>
+        <Label x:Name="lblInProgressTasks" Content="Actividades En Proceso" HorizontalAlignment="Left" Margin="1084,527,0,0" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="30" Foreground="White"/>
+        <Label x:Name="lblFinishedTasks" Content="Actividades Terminadas" HorizontalAlignment="Left" Margin="1084,627,0,0" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="30" Foreground="White"/>
         <Label Content="Total de actividades: " HorizontalAlignment="Left" Margin="1075,338,0,0" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="30" Foreground="White"/>
         <Label x:Name="lblTaskNum" Content=" " HorizontalAlignment="Left" Margin="1442,338,0,0" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="30" Foreground="White" Width="33" Height="45"/>
     </Grid>

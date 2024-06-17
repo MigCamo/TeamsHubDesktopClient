@@ -272,17 +272,23 @@ namespace TeamsHubDesktopClient.Pages
             if (AreValidFields())
             {
                 TaskDTO newTask = GetTaskData();
-                bool result = await _TaskManagement.AddTaskAsync(newTask);
-
-                if (result)
+                if(newTask.StartDate < newTask.EndDate)
                 {
-                    MessageBox.Show("La tarea se ha agregado correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
-                    NavigationService.Navigate(new ActivitiesModule(ProjectSinglenton.projectDTO.IdProject));
+                    bool result = await _TaskManagement.AddTaskAsync(newTask);
+                    if (result)
+                    {
+                        MessageBox.Show("La tarea se ha agregado correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                        NavigationService.Navigate(new ActivitiesModule(ProjectSinglenton.projectDTO.IdProject));
+                    }
+                    else
+                    {
+                        MessageBox.Show("Lo siento hubo problemas con el servidor, intentelo mas tarde.",
+                            "Error con el servidor", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Lo siento hubo problemas con el servidor, intentelo mas tarde.", 
-                        "Error con el servidor", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Lo siento pero la fecha de inicio no puede ser mayor a la de cierre");
                 }
             }
         }
@@ -292,17 +298,24 @@ namespace TeamsHubDesktopClient.Pages
             if (AreValidFields())
             {
                 TaskDTO task = GetTaskData();
-                bool result = await _TaskManagement.UpdateTaskAsync(task);
-
-                if (result)
+                if (task.StartDate < task.EndDate)
                 {
-                    MessageBox.Show("La tarea se ha modificado correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
-                    NavigationService.Navigate(new ActivitiesModule(ProjectSinglenton.projectDTO.IdProject));
+                    bool result = await _TaskManagement.UpdateTaskAsync(task);
+
+                    if (result)
+                    {
+                        MessageBox.Show("La tarea se ha modificado correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                        NavigationService.Navigate(new ActivitiesModule(ProjectSinglenton.projectDTO.IdProject));
+                    }
+                    else
+                    {
+                        MessageBox.Show("Lo siento hubo problemas con el servidor, intentelo mas tarde.",
+                            "Error con el servidor", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Lo siento hubo problemas con el servidor, intentelo mas tarde.",
-                        "Error con el servidor", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Lo siento pero la fecha de inicio no puede ser mayor a la de cierre");
                 }
             }
         }

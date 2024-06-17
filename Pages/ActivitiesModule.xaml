@@ -65,10 +65,10 @@
             <Rectangle HorizontalAlignment="Left" Height="65" Margin="534,179,0,0" Stroke="Black" VerticalAlignment="Top" Width="743" RadiusX="30" RadiusY="30" Fill="#FF24262B" StrokeThickness="0"/>
             <Label Content="Detalles Tarea" HorizontalAlignment="Left" Margin="627,189,0,0" VerticalAlignment="Top" Foreground="#FFF1F1F1" FontFamily="Arial Black" FontSize="30"/>
             <Label Content="Nombre: " HorizontalAlignment="Left" Margin="670,271,0,0" VerticalAlignment="Top" Foreground="#FFFFF5F5" FontFamily="Arial Black" FontSize="24"/>
-            <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="804,271,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="373" FontSize="25" FontFamily="Arial" Height="38"/>
+            <TextBox x:Name="txtName" MaxLength="50" HorizontalAlignment="Left" Margin="804,271,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="373" FontSize="25" FontFamily="Arial" Height="38"/>
             <Image HorizontalAlignment="Left" Height="54" Margin="553,184,0,0" VerticalAlignment="Top" Width="55" Source="..\Resources\Pictures\ICON-BACK.png" MouseLeftButtonUp="CloseForm" RenderTransformOrigin="0.521,0.516"/>
             <Label Content="Descripcion: " HorizontalAlignment="Left" Margin="617,338,0,0" VerticalAlignment="Top" Foreground="#FFFFF5F5" FontFamily="Arial Black" FontSize="24"/>
-            <TextBox x:Name="txtDescription" HorizontalAlignment="Left" Margin="804,338,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="373" FontSize="25" FontFamily="Arial" Height="123"/>
+            <TextBox x:Name="txtDescription" MaxLength="250" HorizontalAlignment="Left" Margin="804,338,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="373" FontSize="25" FontFamily="Arial" Height="123"/>
             <Label Content="Fecha de inicio: " HorizontalAlignment="Left" Margin="574,501,0,0" VerticalAlignment="Top" Foreground="#FFFFF5F5" FontFamily="Arial Black" FontSize="24"/>
             <Label Content="Fecha de cierre: " HorizontalAlignment="Left" Margin="567,565,0,0" VerticalAlignment="Top" Foreground="#FFFFF5F5" FontFamily="Arial Black" FontSize="24"/>
             <DatePicker Name="dpStartDate" HorizontalAlignment="Left" Margin="804,501,0,0" VerticalAlignment="Top" Height="38" Width="373" RenderTransformOrigin="0.5,0.5" SelectedDateChanged="UpdateDatePickerFieldStartDate">

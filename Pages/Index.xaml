@@ -35,7 +35,7 @@
                 </Rectangle.Fill>
             </Rectangle>
             <Label Content="Nombre del proyecto" HorizontalAlignment="Left" Margin="586,270,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="30" FontWeight="Bold" Foreground="#FFE6DFDF"/>
-            <TextBox Name="txtName" HorizontalAlignment="Center" Margin="0,330,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="571" FontSize="24" Height="47" Background="#FF212121" BorderBrush="#FF192A4A" Foreground="White"/>
+            <TextBox Name="txtName" MaxLength="50" HorizontalAlignment="Center" Margin="0,330,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="571" FontSize="24" Height="47" Background="#FF212121" BorderBrush="#FF192A4A" Foreground="White"/>
             <Label Content="Fecha de inicio:" HorizontalAlignment="Left" Margin="586,411,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="30" FontWeight="Bold" Foreground="#FFE6DFDF"/>
             <Label Content="Fecha de Cierre:" HorizontalAlignment="Left" Margin="586,494,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="30" FontWeight="Bold" Foreground="#FFE6DFDF"/>
             <DatePicker Name="dpStartDate" HorizontalAlignment="Left" Margin="836,413,0,0" VerticalAlignment="Top" Height="44" Width="329" RenderTransformOrigin="5,5" SelectedDateChanged="UpdateDatePickerFieldStartDate"/>
