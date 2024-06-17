@@ -10,6 +10,7 @@ using System.Security.Cryptography;
 using TeamHubServiceProjects.DTOs;
 using Microsoft.Extensions.Logging;
 using TeamsHubDesktopClient.Resources;
+using System.IO.Packaging;
 
 namespace TeamsHubDesktopClient.Gateways.Provider
 {
@@ -25,7 +26,7 @@ namespace TeamsHubDesktopClient.Gateways.Provider
         public int AddStudent(StudentDTO newStudent)
         {
             int result;
-
+            
             try
             {
                 var response = HttpClientSingleton.Instance.PostAsJsonAsync($"/TeamHub/Users", newStudent).Result;
@@ -84,6 +85,7 @@ namespace TeamsHubDesktopClient.Gateways.Provider
         public async Task<int> EditStudent(StudentDTO editStudent)
         {
             int result;
+            String password = editStudent.Password;
 
             try
             {
@@ -164,5 +166,6 @@ namespace TeamsHubDesktopClient.Gateways.Provider
 
             return response;
         }
+
     }
 }

@@ -37,9 +37,17 @@ namespace TeamsHubDesktopClient.Pages
             InitializeComponent();
             studentManagement = App.ServiceProvider.GetService<StudentManagementRESTProvider>();
             myUser = studentManagement.GetUserPersonalData(StudentSinglenton.ID);
-            password = myUser.Password;
-            InitializeUserData(myUser);
-
+            if(myUser != null)
+            {
+                password = myUser.Password;
+                InitializeUserData(myUser);
+            }
+            else
+            {
+                btnEditUser.IsEnabled = false;
+                MessageBox.Show("Lo siento, hubo un problema con los servidores", "Error en los servidores",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void Button_CancelRegister(object sender, RoutedEventArgs e)
@@ -56,7 +64,6 @@ namespace TeamsHubDesktopClient.Pages
             txtSurName.Text = studentDTO.SurName;
             txtEmailRegister.Text = studentDTO.Email;
             txtNickName.Text = studentDTO.MiddleName; 
-            pwdPasswordRegister.Password = studentDTO.Password;
         }
 
         private StudentDTO GetUserInfo()
@@ -71,7 +78,6 @@ namespace TeamsHubDesktopClient.Pages
                 SurName = txtSurName.Text,
                 Password = pwdPasswordRegister.Password
             };
-
             return student;
         }
 
@@ -79,7 +85,7 @@ namespace TeamsHubDesktopClient.Pages
         { 
             if (AreUserFieldsValid())
             {
-                if(pwdPasswordConfirm.Password == password)
+                if (pwdPasswordConfirm.Password == password)
                 {
                     StudentDTO studentDTO = GetUserInfo();
                     int result = await studentManagement.EditStudent(studentDTO);
@@ -87,7 +93,7 @@ namespace TeamsHubDesktopClient.Pages
                     if (result == (int)ServerResponse.SuccessfulRegistration)
                     {
                         StudentSinglenton.FullName = txtLastName.Text + " " + txtSurName.Text + " " + txtName.Text + " " + txtNickName.Text;
-                        MessageBox.Show("Modificacion de usuario correcta", "Se modifico correctamente la modificacion del usuario",
+                        MessageBox.Show("Se modifico correctamente la modificacion del usuario", "Modificacion de usuario correcta",
                             MessageBoxButton.OK, MessageBoxImage.Information);
                         MainWindow mainWindow = Window.GetWindow(this) as MainWindow;
                         Frame framePrincipal = mainWindow.FindName("frameContainer") as Frame;
@@ -95,7 +101,7 @@ namespace TeamsHubDesktopClient.Pages
                     }
                     else if (result == (int)ServerResponse.NotRegistered)
                     {
-                        MessageBox.Show("Usuario no encontrado", "Lo siento, el usuario a modificar no se encuentra",
+                        MessageBox.Show("Lo siento, el usuario a modificar no se encuentra", "Usuario no encontrado",
                             MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                     else
@@ -106,7 +112,7 @@ namespace TeamsHubDesktopClient.Pages
                 }
                 else
                 {
-                    MessageBox.Show("Contraseña incorrecta", "Lo siento pero la contraseña de confirmacion no coincide con la registrada",
+                    MessageBox.Show("Lo siento pero la contraseña de confirmacion no coincide con la registrada", "Contraseña incorrecta",
                         MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
@@ -137,49 +143,49 @@ namespace TeamsHubDesktopClient.Pages
             bool areFieldsValid = true;
 
             List<string> errorMessages = new List<string>();
-            if (!RegexChecker.CheckName(txtName.Text))
+            if (!RegexChecker.CheckName(txtName.Text.Trim()))
             {
                 txtName.BorderBrush = Brushes.Red;
                 errorMessages.Add("'Nombres'");
                 areFieldsValid = false;
             }
 
-            if (!RegexChecker.CheckLastName(txtLastName.Text))
+            if (!RegexChecker.CheckLastName(txtLastName.Text.Trim()))
             {
                 txtLastName.BorderBrush = Brushes.Red;
                 errorMessages.Add("'Apellido Paterno'");
                 areFieldsValid = false;
             }
 
-            if (!RegexChecker.CheckSecondLastName(txtSurName.Text))
+            if (!RegexChecker.CheckSecondLastName(txtSurName.Text.Trim()))
             {
                 txtSurName.BorderBrush = Brushes.Red;
                 errorMessages.Add("'Apellido Materno'");
                 areFieldsValid = false;
             }
 
-            if (!RegexChecker.CheckName(txtNickName.Text))
+            if (!RegexChecker.CheckName(txtNickName.Text.Trim()))
             {
                 txtNickName.BorderBrush = Brushes.Red;
                 errorMessages.Add("'Apodo'");
                 areFieldsValid = false;
             }
 
-            if (!RegexChecker.CheckEmail(txtEmailRegister.Text))
+            if (!RegexChecker.CheckEmail(txtEmailRegister.Text.Trim()))
             {
                 txtEmailRegister.BorderBrush = Brushes.Red;
                 errorMessages.Add("'Email'");
                 areFieldsValid = false;
             }
 
-            if (string.IsNullOrEmpty(pwdPasswordConfirm.Password))
+            if (string.IsNullOrEmpty(pwdPasswordConfirm.Password.Trim()))
             {
                 pwdPasswordConfirm.BorderBrush = Brushes.Red;
                 errorMessages.Add("'Confirmacion de contraseña'");
                 areFieldsValid = false;
             }
 
-            if (string.IsNullOrEmpty(pwdPasswordRegister.Password))
+            if (string.IsNullOrEmpty(pwdPasswordRegister.Password.Trim()))
             {
                 pwdPasswordRegister.BorderBrush = Brushes.Red;
                 errorMessages.Add("'Contraseña'");
@@ -191,6 +197,13 @@ namespace TeamsHubDesktopClient.Pages
                 string WrongFields = "'" + string.Join("', '", errorMessages) + "'";
                 MessageBox.Show("Campos invalidos", "Los campos " + WrongFields
                     + " no deben ser nulos, ni debe tener caracteres especiales");
+            }
+
+            if (pwdPasswordRegister.Password.Length < 8)
+            {
+                MessageBox.Show("La contraseña debe tener al menos 8 caracteres como minimo",
+                    "Contraseña invalida", MessageBoxButton.OK, MessageBoxImage.Information);
+                areFieldsValid = false;
             }
 
             return areFieldsValid;

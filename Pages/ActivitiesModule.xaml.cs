@@ -232,7 +232,7 @@ namespace TeamsHubDesktopClient.Pages
 
         private void BackToPreviousWindow(object sender, MouseButtonEventArgs e)
         {
-            NavigationService.GoBack(); 
+            NavigationService.Navigate(new Index());
         }
 
         private TaskDTO GetTaskData()
@@ -288,7 +288,8 @@ namespace TeamsHubDesktopClient.Pages
                 }
                 else
                 {
-                    MessageBox.Show("Lo siento pero la fecha de inicio no puede ser mayor a la de cierre");
+                    MessageBox.Show("Lo siento pero la fecha de inicio no puede ser mayor a la de cierre",
+                        "Fechas erroneas", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
         }
@@ -315,7 +316,8 @@ namespace TeamsHubDesktopClient.Pages
                 }
                 else
                 {
-                    MessageBox.Show("Lo siento pero la fecha de inicio no puede ser mayor a la de cierre");
+                    MessageBox.Show("Lo siento pero la fecha de inicio no puede ser mayor a la de cierre",
+                        "Fechas erroneas", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
         }
