@@ -32,15 +32,13 @@ namespace TeamsHubDesktopClient.Gateways.Provider
                 HttpClientSingleton.SetAuthorizationHeader();
                 var request = new HttpRequestMessage(HttpMethod.Post, "/TeamHub/Task/") { Content = content };
                 var result = await HttpClientSingleton.Instance.SendAsync(request);
-                if (!result.IsSuccessStatusCode)
+                if (result.IsSuccessStatusCode)
                 {
-                    var responseContent = await result.Content.ReadAsStringAsync();
-                    response = false;
+                    response = true;
                 }
                 else
                 {
-                    var responseContentSuccess = await result.Content.ReadAsStringAsync();
-                    bool.TryParse(responseContentSuccess, out response);
+                    response = false;
                 }
             }
             catch (Exception ex)
@@ -63,15 +61,13 @@ namespace TeamsHubDesktopClient.Gateways.Provider
                 HttpClientSingleton.SetAuthorizationHeader();
                 var request = new HttpRequestMessage(HttpMethod.Post, "/TeamHub/Task/up") { Content = content };
                 var result = await HttpClientSingleton.Instance.SendAsync(request);
-                if (!result.IsSuccessStatusCode)
+                if (result.IsSuccessStatusCode)
                 {
-                    var responseContent = await result.Content.ReadAsStringAsync();
-                    response = false;
+                    response = true;
                 }
                 else
                 {
-                    var responseContentSuccess = await result.Content.ReadAsStringAsync();
-                    bool.TryParse(responseContentSuccess, out response);
+                    response = false;
                 }
             }
             catch (Exception ex)
@@ -134,11 +130,14 @@ namespace TeamsHubDesktopClient.Gateways.Provider
                 HttpClientSingleton.SetAuthorizationHeader();
                 var requestUri = $"/TeamHub/Task/{taskID}";
                 var response = await HttpClientSingleton.Instance.DeleteAsync(requestUri);
-                response.EnsureSuccessStatusCode();
-                var responseContent = await response.Content.ReadAsStringAsync();
-                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-                var apiResponse = JsonSerializer.Deserialize<ApiResponse>(responseContent, options);
-                result = apiResponse?.Success ?? false;
+                if (response.IsSuccessStatusCode)
+                {
+                    result = true;
+                }
+                else
+                {
+                    result = false;
+                }
             }
             catch (HttpRequestException httpEx)
             {
