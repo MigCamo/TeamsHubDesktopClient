@@ -120,7 +120,7 @@ namespace TeamsHubDesktopClient.Pages
 
         private void BackToPreviousWindow(object sender, MouseButtonEventArgs e)
         {
-            NavigationService.GoBack();
+            NavigationService.Navigate(new Index());
         }
     }
 }

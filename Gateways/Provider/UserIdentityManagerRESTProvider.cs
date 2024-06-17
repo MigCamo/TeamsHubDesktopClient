@@ -27,7 +27,7 @@ namespace TeamsHubDesktopClient.Gateways.Provider
 
             try
             {
-                //sessionLoginRequest.password = EncryptPassword(sessionLoginRequest.password);
+                sessionLoginRequest.password = EncryptPassword(sessionLoginRequest.password);
                 var response = await HttpClientSingleton.Instance.PostAsJsonAsync("/TeamHub/Sessions/validateUser", sessionLoginRequest);
                 response.EnsureSuccessStatusCode();
                 userValidationResponse = await response.Content.ReadFromJsonAsync<UserValidationResponse>();
