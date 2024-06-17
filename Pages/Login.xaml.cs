@@ -182,6 +182,11 @@ namespace TeamsHubDesktopClient.Pages
             if (AreUserFieldsValid())
             {
                 StudentDTO studentDTO = GetUserInfo();
+                byte[] encodedPassword = new UTF8Encoding().GetBytes(studentDTO.Password);
+                byte[] hash = ((HashAlgorithm)CryptoConfig.CreateFromName("MD5")).ComputeHash(encodedPassword);
+                string passwordMD5 = BitConverter.ToString(hash).Replace("-", string.Empty).ToLower();
+                studentDTO.Password = passwordMD5;
+
                 int result = studentManager.AddStudent(studentDTO);
                 if (result == (int)ServerResponse.SuccessfulRegistration)
                 {

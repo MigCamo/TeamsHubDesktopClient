@@ -45,7 +45,7 @@ namespace TeamsHubDesktopClient.Pages
 
         private void BackToPreviousWindow(object sender, MouseButtonEventArgs e)
         {
-            NavigationService.GoBack();
+            NavigationService.Navigate(new Index());
         }
 
         private void UploadFileFromSystem(object sender, RoutedEventArgs e)
